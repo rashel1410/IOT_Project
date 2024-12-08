@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Adafruit_SH110X.h>
 
 //Define pins
 #define I2C_A_SDA 8 // GPIO8
@@ -19,19 +20,22 @@
 #define SCREEN_HEIGHT 64     // OLED display height, in pixels
 #define OLED_RESET -1        // Reset pin # (or -1 if sharing Arduino reset pin)
 #define SCREEN_ADDRESS 0x3C  // Change if required
-#define ROTATION 2           // Rotates text on OLED 1=90 degrees, 2=180 degrees
+#define ROTATION 0           // Rotates text on OLED 1=90 degrees, 2=180 degrees
 
 // Define display object
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+//Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 
 void setup() {
   Serial.begin(115200);
+  delay(250); // Allow time for the OLED to power up
   while (!Serial)
     ;
    Wire.begin(I2C_A_SDA, I2C_A_SCL);
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
-  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+  if (!display.begin(SCREEN_ADDRESS, true)) {
     Serial.println(F("Display1 SSD1306 allocation failed"));
     for (;;)
       ;  // Don't proceed, loop forever
@@ -44,7 +48,7 @@ void setup() {
   // Display settings
   display.clearDisplay();
   display.setTextSize(1);             // Normal 1:1 pixel scale
-  display.setTextColor(WHITE);        // Draw white text
+  display.setTextColor(SH110X_WHITE); // Draw white text
   display.setCursor(0,0);             // Start at top-left corner
   display.setRotation(ROTATION);      // Set screen rotation
 
