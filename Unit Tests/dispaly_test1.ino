@@ -29,9 +29,14 @@
 #define OLED_CS       5
 #define OLED_RST      9
 
+#define i2c_Address 0x3C // Default for most SH1106 OLEDs
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define OLED_RESET -1   // Reset pin not used (set to -1)
 
 // Create the OLED display
-Adafruit_SH1106G display = Adafruit_SH1106G(128, 64,OLED_MOSI, OLED_CLK, OLED_DC, OLED_RST, OLED_CS);
+//Adafruit_SH1106G display = Adafruit_SH1106G(128, 64,OLED_MOSI, OLED_CLK, OLED_DC, OLED_RST, OLED_CS);
+Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 
 #define NUMFLAKES 10
@@ -72,7 +77,7 @@ void setup()   {
 
 
   // Start OLED
-  display.begin(0, true); // we dont use the i2c address but we will reset!
+  display.begin(i2c_Address, true); // we dont use the i2c address but we will reset!
 
 
   // Show image buffer on the display hardware.
