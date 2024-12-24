@@ -20,3 +20,10 @@
  
 This project is part of ICST - The Interdisciplinary Center for Smart Technologies, Taub Faculty of Computer Science, Technion
 https://icst.cs.technion.ac.il/
+
+
+# In order to run the server:
+pull git repo
+cd into server 
+pip install -r requirements.txt
+python main.py
