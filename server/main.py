@@ -2,6 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from models import MsgPayload
+from db_routes import router as db_router
+
 
 app = FastAPI()
 
@@ -51,6 +53,9 @@ def add_msg(msg_name: str) -> dict[str, MsgPayload]:
 @app.get("/messages")
 def message_items() -> dict[str, dict[int, MsgPayload]]:
     return {"messages:": messages_list}
+
+
+app.include_router(db_router)
 
 
 if __name__ == "__main__":

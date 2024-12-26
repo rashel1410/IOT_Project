@@ -1,0 +1,1 @@
+ /Users/rashelstrigevsky/development/IOT/IOT_Project/eat_smart/.dart_tool/flutter_build/539abef8ed2d35bcae5fcb70e1dc1d55/native_assets.yaml: 
