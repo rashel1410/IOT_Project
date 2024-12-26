@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.eat_smart"
+    namespace = "com.iot.technion.eat_smart"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
