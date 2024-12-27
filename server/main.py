@@ -1,8 +1,11 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from models import MsgPayload
 from db_routes import router as db_router
+from pydantic import BaseModel
+import json
 
 
 app = FastAPI()
@@ -56,6 +59,38 @@ def message_items() -> dict[str, dict[int, MsgPayload]]:
 
 
 app.include_router(db_router)
+
+
+# Define the model for the request body
+class WeightData(BaseModel):
+    weight: float
+
+# Endpoint to save weight
+@app.post("/save_weight")
+async def save_weight(data: WeightData):
+    try:
+        with open("weights.json", "a") as file:
+            json.dump(data.dict(), file)
+            file.write("\n")
+        return "Weight saved successfully!"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/upload_image")
+async def upload_image(request: Request):
+    try:
+        image_data = await request.body()
+        
+        # image_path = os.path.join(UPLOAD_DIR, "uploaded_image.jpg")
+        image_path = "uploaded_photos/captured_image.jpg"
+        with open(image_path, "wb") as file:
+            file.write(image_data)
+        
+        return JSONResponse(content={"message": "Image received successfully", "size": len(image_data)}, status_code=200)
+    
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
 if __name__ == "__main__":
