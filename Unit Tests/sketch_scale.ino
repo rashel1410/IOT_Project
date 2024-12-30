@@ -20,7 +20,7 @@ void setup() {
 void loop() {
 
   if (scale.is_ready()) {
-    scale.set_scale(46.33684211);    
+    scale.set_scale(459.691667);    
     Serial.println("Tare... remove any items from the scale");
     delay(2000);
     scale.tare();
