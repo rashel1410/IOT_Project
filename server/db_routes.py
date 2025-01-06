@@ -66,7 +66,7 @@ def get_users():
 @router.post("/add_user_mock_data")
 def add_user_mock_data():
     user_profile = User(
-        id="user2",
+        id="user3",
         name="John Doe",
         food_items=[]
     )

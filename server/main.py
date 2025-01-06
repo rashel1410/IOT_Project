@@ -6,13 +6,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import MsgPayload
 from db_routes import router as db_router
+import db_routes
 from vision_api_routes import router as vision_router
-#from gemini_service import analyze_food_with_gemini
+from gemini_service import analyze_food_with_gemini
 from pydantic import BaseModel
 from PIL import Image
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
+
 
 
 app = FastAPI()
@@ -102,15 +104,28 @@ async def upload_image(request: Request):
 
 @app.post("/upload_data")
 async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
+    image_path = "Banana.jpg"
     # Save weight to JSON file
     weights_data = {"weight": weight}
     with open("uploaded/weights.json", "w") as f:
         json.dump(weights_data, f)
     
-    # Save image to file
-    with open("uploaded/captured_image.jpg", "wb") as f:
-        f.write(await image.read())
-    
+    # # Save image to file
+    # with open(image_path, "wb") as f:
+    #     f.write(await image.read())
+
+
+    food_item_json = analyze_food_with_gemini(image_path)
+    print(food_item_json)
+    food_item = db_routes.FoodItem(
+        name = food_item_json['name'],
+        nutrients = food_item_json['nutrients'],
+        timestamp = food_item_json['timestamp']
+    )
+
+    default_user_id = "user2"
+    db_router.add_food(user_id=default_user_id, food=food_item)
+        
     return {"message": "Data uploaded successfully"}
 
 
