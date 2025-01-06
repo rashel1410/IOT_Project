@@ -1,5 +1,7 @@
+import os
+import shutil
 import uvicorn
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, HTTPException, Request, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import MsgPayload
@@ -80,6 +82,36 @@ async def save_weight(data: WeightData):
         return "Weight saved successfully!"
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/upload_image")
+async def upload_image(request: Request):
+    try:
+        image_data = await request.body()
+        
+        # image_path = os.path.join(UPLOAD_DIR, "uploaded_image.jpg")
+        image_path = "uploaded/captured_image.jpg"
+        with open(image_path, "wb") as file:
+            file.write(image_data)
+        
+        return JSONResponse(content={"message": "Image received successfully", "size": len(image_data)}, status_code=200)
+    
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+@app.post("/upload_data")
+async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
+    # Save weight to JSON file
+    weights_data = {"weight": weight}
+    with open("uploaded/weights.json", "w") as f:
+        json.dump(weights_data, f)
+    
+    # Save image to file
+    with open("uploaded/captured_image.jpg", "wb") as f:
+        f.write(await image.read())
+    
+    return {"message": "Data uploaded successfully"}
 
 
 if __name__ == "__main__":
