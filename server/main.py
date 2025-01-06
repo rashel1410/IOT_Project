@@ -4,18 +4,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import MsgPayload
 from db_routes import router as db_router
+from vision_api_routes import router as vision_router
 from pydantic import BaseModel
 import json
 
 
 app = FastAPI()
+app.include_router(db_router)
+app.include_router(vision_router)
 
 # Configure CORS
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://172.20.10.2:8045",  # Add your local IP address here
-    "http://172.20.10.1:8045",  # Add your local IP address here
+    "http://10.100.102.10:8045",
+    #"http://172.20.10.2:8045",  # Add your local IP address here
+    #"http://172.20.10.1:8045",  # Add your local IP address here
     # Add other origins as needed
 ]
 
@@ -56,9 +60,6 @@ def add_msg(msg_name: str) -> dict[str, MsgPayload]:
 @app.get("/messages")
 def message_items() -> dict[str, dict[int, MsgPayload]]:
     return {"messages:": messages_list}
-
-
-app.include_router(db_router)
 
 
 # Define the model for the request body

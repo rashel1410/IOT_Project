@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "eat-smart-f1e77",
+  "private_key_id": "23b04c52788303e5dc9cd133fac2c7a0bc347938",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCoMC9cgQpday8T\n9sLo4ehXXmYkSiKB9mf661Ns+PLbA+oL+8KoZcgu9jU7WTwm5W2HsIdThOcFjDEg\nrbjFSuTAEnp0TtYcOSJsvA3jy5DHshCr7BkvrhM3zZ+qxej8mkq4DV6xkhg4likm\n0KqutkmCmyBsceMUtT2ksjWEGlRir8/cIikljJLurkHWjadWeg1WWa+8iMqyrvRB\nAE/nCsnNvuH789jdtpOVkE1MaPtYwO9wSnz+PuXL0u2Nv/zgyR0wTQYmQZPLVUZB\nazQCmpT1+jvVmlOaRhXFPhAwyjglGkJyjmkYGtrKhC+1YQHFtA982SVMSHEVtAPl\nxsC7BL/7AgMBAAECggEAOrEF9gv55/u9ZAQapFYhVEvW7RcJz7yDMKbqZ/7AEPne\ntOvYVBegsfKtRNaxDQnHHTDXKKgaTm9LvZGiBwdJqFVKckgIo7S0dKlzV2j0Txuu\ngbBUYbUnc7PH4jpKQcw+Ath3kRPga+7K0YbD6VAnevJTcESV7+YHau/diQn/JKiQ\nTwu5epAeUWi1504dda6U2u6Ec3/NT9s0h3d2Jip7EhXvVboBjb8pysTL9UjPvuFP\nAJSxEIRFpDobDY/luCwMxN83gEJnc4VCu3KtUTHNV1qbut5CL4hXZOhhswKEy6Bq\nc7bAJiH2NDrWRvgIGf6yUmHR5ShjThcQXVNMsJOsoQKBgQDiJa/Fd2mJq1notyVj\nFUjYKDZyPKOe4DhMf+2i/O5p36Sb/t9YGCKpgkoSzT6psnt0OynEy46MGkaBodP0\nXAVu4KMnCtgOn1oZqKV6duIUjJMee27jxTdRak1wgQsqpxe/U2NGRPLOnxep1o/V\nkojhZNw2MYxV7sZu3KdpbkfIUwKBgQC+Y9v8Ip+AFAkoElrwA1uUweyIRfnkkRve\nuuqg8P/FrKzlH0AqoLhYBUaOYaZsVreXWYh9N07fsvB6nIaPJ9v18Mkv9DDFeCKY\neUenGZl9MogldlsFSv0XzS91W9X6xlR4u4f0rKvWo6H0vChtQeQBxuY1KoPGL76b\nuaDlkreUuQKBgG8cpSgYa7pAfoRgt/Xe11OdLmMieCHveLndgRy7uUg7od0jdQkL\nkrxGT669OTSXhSCukO8oNHmRz2KR6Fn/fIvlw0PDiDRnBxXkTqnFD3+ZMg+gBfPT\nSkKuQC4uuRXT008l4Xj9F299q1q/GRyOSsKzk57s6U6var+9mmOq04oRAoGBAJWm\nNk68BDUPCpd1vgb0DLMjrsD6h86SBJ8QusXgSJre/FNoOe6Hv/5nvyrBNKfpjYso\nc/FAXP3WT9GAYP/7K5joN6s6vG8q276PbbO5mnzfEEap/idt5vwjas9LbSkdZV40\nwUufwb4HhpCwqPIgHZEL/v0BOuy3sJIE2aQ5q5T5AoGBAMIF4ZoWEn4y0AOSrWCQ\n9nbsXsXDIlx5PsXzu9dOAIB10e15SNkNqLcNSSPzN4+rwq2y98F/zLWQ8vi1VKJD\nEhDrGM3R2wdZw4LgSTt/6zfhbpJ4xaazTlwAH9O5P5lFg3br7PAZ2BiWp8XWHZnZ\nq0TzS4LYdz/HH/KruauRu14O\n-----END PRIVATE KEY-----\n",
+  "client_email": "eat-smart-vision-creds@eat-smart-f1e77.iam.gserviceaccount.com",
+  "client_id": "103574252051056274857",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/eat-smart-vision-creds%40eat-smart-f1e77.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
