@@ -5,8 +5,7 @@ from datetime import datetime
 
 router = APIRouter()
 
-class FoodNutrients(BaseModel):
-    nutrientId: int
+class FoodNutrients(BaseModel): 
     nutrientName: str
     nutrientNumber: str
     unitName: str
@@ -84,24 +83,24 @@ def add_food_mock_data(user_id: str):
         {
             "name": "Apple",
             "nutrients": [
-                {"nutrientId": 1, "nutrientName": "Vitamin C", "nutrientNumber": "C", "unitName": "mg", "value": 5.0},
-                {"nutrientId": 2, "nutrientName": "Fiber", "nutrientNumber": "F", "unitName": "g", "value": 2.0},
+                {"nutrientName": "Vitamin C", "nutrientNumber": "C", "unitName": "mg", "value": 5.0},
+                {"nutrientName": "Fiber", "nutrientNumber": "F", "unitName": "g", "value": 2.0},
             ],
             "timestamp": datetime.now()
         },
         {
             "name": "Banana",
             "nutrients": [
-                {"nutrientId": 3, "nutrientName": "Potassium", "nutrientNumber": "K", "unitName": "mg", "value": 10.0},
-                {"nutrientId": 4, "nutrientName": "Vitamin B6", "nutrientNumber": "B6", "unitName": "mg", "value": 1.0},
+                {"nutrientName": "Potassium", "nutrientNumber": "K", "unitName": "mg", "value": 10.0},
+                {"nutrientName": "Vitamin B6", "nutrientNumber": "B6", "unitName": "mg", "value": 1.0},
             ],
             "timestamp": datetime.now()
         },
         {
             "name": "Carrot",
             "nutrients": [
-                {"nutrientId": 5, "nutrientName": "Vitamin A", "nutrientNumber": "A", "unitName": "IU", "value": 100.0},
-                {"nutrientId": 6, "nutrientName": "Fiber", "nutrientNumber": "F", "unitName": "g", "value": 3.0},
+                {"nutrientName": "Vitamin A", "nutrientNumber": "A", "unitName": "IU", "value": 100.0},
+                {"nutrientName": "Fiber", "nutrientNumber": "F", "unitName": "g", "value": 3.0},
             ],
             "timestamp": datetime.now()
         },

@@ -45,8 +45,8 @@ fetch("http://0.0.0.0:8045/add_food/123", {
     body: JSON.stringify({
         "name": "Banana",
         "nutrients": [
-            {"nutrientId": 3, "nutrientName": "Potassium", "nutrientNumber": "K", "unitName": "mg", "value": 10.0},
-            {"nutrientId": 4, "nutrientName": "Vitamin B6", "nutrientNumber": "B6", "unitName": "mg", "value": 1.0}
+            {"nutrientName": "Potassium", "nutrientNumber": "K", "unitName": "mg", "value": 10.0},
+            {"nutrientName": "Vitamin B6", "nutrientNumber": "B6", "unitName": "mg", "value": 1.0}
         ],
         "timestamp": new Date().toISOString()
     })

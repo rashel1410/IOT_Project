@@ -1,11 +1,15 @@
 import uvicorn
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import MsgPayload
 from db_routes import router as db_router
 from vision_api_routes import router as vision_router
+#from gemini_service import analyze_food_with_gemini
 from pydantic import BaseModel
+from PIL import Image
+import google.generativeai as genai
+from dotenv import load_dotenv
 import json
 
 
@@ -17,7 +21,7 @@ app.include_router(vision_router)
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://10.100.102.10:8045",
+    "http://10.100.102.14:8045",
     #"http://172.20.10.2:8045",  # Add your local IP address here
     #"http://172.20.10.1:8045",  # Add your local IP address here
     # Add other origins as needed
@@ -76,22 +80,6 @@ async def save_weight(data: WeightData):
         return "Weight saved successfully!"
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/upload_image")
-async def upload_image(request: Request):
-    try:
-        image_data = await request.body()
-        
-        # image_path = os.path.join(UPLOAD_DIR, "uploaded_image.jpg")
-        image_path = "uploaded_photos/captured_image.jpg"
-        with open(image_path, "wb") as file:
-            file.write(image_data)
-        
-        return JSONResponse(content={"message": "Image received successfully", "size": len(image_data)}, status_code=200)
-    
-    except Exception as e:
-        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
 if __name__ == "__main__":
