@@ -13,7 +13,10 @@ from pydantic import BaseModel
 from PIL import Image
 import google.generativeai as genai
 from dotenv import load_dotenv
+from db_routes import FoodItem, FoodNutrients, add_food, add_user_mock_data
+from dateutil.parser import parse
 import json
+
 
 
 
@@ -25,7 +28,7 @@ app.include_router(vision_router)
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://10.100.102.14:8045",
+    "http://172.20.10.10:8045",
     #"http://172.20.10.2:8045",  # Add your local IP address here
     #"http://172.20.10.1:8045",  # Add your local IP address here
     # Add other origins as needed
@@ -104,27 +107,43 @@ async def upload_image(request: Request):
 
 @app.post("/upload_data")
 async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
-    image_path = "Banana.jpg"
+    #image_path = "Banana.jpg"
     # Save weight to JSON file
     weights_data = {"weight": weight}
     with open("uploaded/weights.json", "w") as f:
         json.dump(weights_data, f)
     
-    # # Save image to file
-    # with open(image_path, "wb") as f:
-    #     f.write(await image.read())
+    image_path = "uploaded/captured_image.jpg"
+    with open(image_path, "wb") as file:
+        file.write(await image.read())
 
 
     food_item_json = analyze_food_with_gemini(image_path)
-    print(food_item_json)
-    food_item = db_routes.FoodItem(
-        name = food_item_json['name'],
-        nutrients = food_item_json['nutrients'],
-        timestamp = food_item_json['timestamp']
+    nutrients_list = [
+    FoodNutrients(
+        nutrientName=nutrient["nutrientName"],
+        nutrientNumber=str(nutrient["nutrientNumber"]),
+        unitName=nutrient["unitName"],
+        value=float(nutrient["value"])
+    )
+    for nutrient in food_item_json["nutrients"]
+]
+
+    # Create the FoodItem object
+    parsed_timestamp = parse(food_item_json["timestamp"])
+    food_item = FoodItem(
+        name=food_item_json["name"],
+        nutrients=nutrients_list,
+        timestamp=parsed_timestamp
     )
 
+
+    # Access specific attributes
+    print("Food name:", food_item.name)
+    print("First nutrient name:", food_item.nutrients[0].nutrientName)
+
     default_user_id = "user2"
-    db_router.add_food(user_id=default_user_id, food=food_item)
+    add_food(user_id=default_user_id, food=food_item)
         
     return {"message": "Data uploaded successfully"}
 

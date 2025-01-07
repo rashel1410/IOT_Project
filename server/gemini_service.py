@@ -35,8 +35,8 @@ def prepare_image_data(image_path="Banana.jpg"):
 def analyze_food_with_gemini(image_path):
     """Analyze the food in the image using Gemini API"""
     try:
-        image_path_1 = "Banana.jpg"  # Replace with the actual path to your first image
-        sample_file_1 = PIL.Image.open(image_path_1)
+        #image_path_1 = "uploaded/captured_image.jpg"  # Replace with the actual path to your first image
+        sample_file_1 = PIL.Image.open(image_path)
 
         model = genai.GenerativeModel(model_name="gemini-1.5-pro")
         prompt = """
@@ -71,30 +71,30 @@ def analyze_food_with_gemini(image_path):
 
 
 
-food_json = analyze_food_with_gemini("Banana.jpg")
+# food_json = analyze_food_with_gemini("uploaded/captured_image.jpg")
 
-nutrients_list = [
-    FoodNutrients(
-        nutrientName=nutrient["nutrientName"],
-        nutrientNumber=str(nutrient["nutrientNumber"]),
-        unitName=nutrient["unitName"],
-        value=float(nutrient["value"])
-    )
-    for nutrient in food_json["nutrients"]
-]
+# nutrients_list = [
+#     FoodNutrients(
+#         nutrientName=nutrient["nutrientName"],
+#         nutrientNumber=str(nutrient["nutrientNumber"]),
+#         unitName=nutrient["unitName"],
+#         value=float(nutrient["value"])
+#     )
+#     for nutrient in food_json["nutrients"]
+# ]
 
-# Create the FoodItem object
-parsed_timestamp = parse(food_json["timestamp"])
-food_item = FoodItem(
-    name=food_json["name"],
-    nutrients=nutrients_list,
-    timestamp=parsed_timestamp
-)
+# # Create the FoodItem object
+# parsed_timestamp = parse(food_json["timestamp"])
+# food_item = FoodItem(
+#     name=food_json["name"],
+#     nutrients=nutrients_list,
+#     timestamp=parsed_timestamp
+# )
 
 
-# Access specific attributes
-print("Food name:", food_item.name)
-print("First nutrient name:", food_item.nutrients[0].nutrientName)
+# # Access specific attributes
+# print("Food name:", food_item.name)
+# print("First nutrient name:", food_item.nutrients[0].nutrientName)
 
-default_user_id = "user2"
-add_food(user_id=default_user_id, food=food_item)
+# default_user_id = "user2"
+# add_food(user_id=default_user_id, food=food_item)
