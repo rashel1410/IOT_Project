@@ -39,7 +39,7 @@ const char *ssid = "Rahaf";
 const char *password = "122334455";
 
 // Server URL
-const char *serverURL = "http://172.20.10.4:8045/upload_data"; // Single endpoint
+const char *serverURL = "http://172.20.10.10:8045/upload_data"; // Single endpoint
 
 void setupCameraConfig()
 {
@@ -109,7 +109,15 @@ void captureAndSendData()
     delay(1000);
     Serial.printf("Weight reading: %ld\n", weightReading);
 
-    // Capture a photo
+    // Release previous frame, if any
+    camera_fb_t *previousPhoto = esp_camera_fb_get();
+    if (previousPhoto)
+    {
+        esp_camera_fb_return(previousPhoto);
+    }
+
+    // Allow camera to refresh
+    delay(200); // Adjust delay if necessary
     camera_fb_t *capturedPhoto = esp_camera_fb_get();
     if (!capturedPhoto)
     {
@@ -148,6 +156,7 @@ void captureAndSendData()
 
     // Send HTTP POST request
     http.begin(serverURL);
+    http.setTimeout(20000);
     http.addHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
     int httpResponseCode = http.POST(body, contentLength);
 
