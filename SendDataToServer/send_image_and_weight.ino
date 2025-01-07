@@ -39,7 +39,7 @@ const char *ssid = "Rahaf";
 const char *password = "122334455";
 
 // Server URL
-const char *serverURL = "http://172.20.10.4:8045/upload_data"; // Single endpoint
+const char *serverURL = "http://172.20.10.10:8045/upload_data"; // Single endpoint
 
 void setupCameraConfig()
 {
