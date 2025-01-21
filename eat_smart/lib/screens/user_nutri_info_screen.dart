@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../models/food_item.dart';
+import 'current_item_screen.dart';
 
 class UserFoodScreen extends StatefulWidget {
   const UserFoodScreen({Key? key}) : super(key: key);
@@ -26,7 +27,8 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
       appBar: AppBar(
         toolbarHeight: 100.0,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 20.0), // Add padding to the top
+          padding: const EdgeInsets.only(
+              top: 30.0, bottom: 20.0), // Add padding to the top
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,7 +39,6 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
           ),
         ),
       ),
-
       body: FutureBuilder<List<FoodItem>>(
         future: items,
         builder: (context, snapshot) {
@@ -54,15 +55,28 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
                 final foodItem = snapshot.data![index];
                 return ListTile(
                   title: Text(foodItem.name),
-                  subtitle: Text(
-                      foodItem.nutrients.map(
-                              (nutrient) => '${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}').join(', ')
-                  ),
+                  subtitle: Text(foodItem.nutrients
+                      .map((nutrient) =>
+                          '${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}')
+                      .join(', ')),
                 );
               },
             );
           }
         },
+      ),
+
+      // Add a floating action button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CurrentItemScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
