@@ -6,12 +6,11 @@ import 'food_item.dart';
 class User {
   final String name;
   final List<FoodItem> foods;
-  User({this.name = '',this.foods = const []});
+  User({this.name = '', this.foods = const []});
 
   String getUserName() {
     return this.name; //name;
   }
-
 
   Future<List<FoodItem>> getUserFoodsMockData() async {
     // Mock data
@@ -77,8 +76,7 @@ class User {
   }
 
   Future<List<FoodItem>> getUserFoods() async {
-
-    var backendIP = '10.100.102.19';
+    var backendIP = '192.168.68.110';
     var port = '8045';
     var res = await http.get(Uri.parse('http://$backendIP:$port'));
     print("Waiting for response from server...");

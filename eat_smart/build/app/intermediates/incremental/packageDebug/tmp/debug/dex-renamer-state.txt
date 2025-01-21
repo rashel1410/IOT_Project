@@ -1,4 +1,4 @@
-#Thu Dec 26 14:36:40 IST 2024
+#Tue Jan 21 19:38:59 IST 2025
 base.0=/Users/rashelstrigevsky/development/IOT/IOT_Project/eat_smart/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/rashelstrigevsky/development/IOT/IOT_Project/eat_smart/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
 base.2=/Users/rashelstrigevsky/development/IOT/IOT_Project/eat_smart/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
