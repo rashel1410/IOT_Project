@@ -1,0 +1,56 @@
+const userId = "user1"; // Replace with the actual user ID
+
+fetch(`http://0.0.0.0:8045/add_food_mock_data/${userId}`, {
+  method: 'POST'
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+
+
+fetch('http://0.0.0.0:8045/add_user_mock_data', {
+  method: 'POST'
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+
+const userId = "user1"; // Replace with the actual user ID
+
+fetch(`http://0.0.0.0:8045/get_user_foods?user_id=${userId}`, {
+  method: 'GET'
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+
+const userId = "user1"; // Replace with the actual user ID
+
+fetch(`http://0.0.0.0:8045/get_last_item_nutrition_values?user_id=${userId}`, {
+  method: 'GET'
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+
+fetch("http://0.0.0.0:8045/add_food/123", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        "name": "Banana",
+        "nutrients": [
+            {"nutrientName": "Potassium", "nutrientNumber": "K", "unitName": "mg", "value": 10.0},
+            {"nutrientName": "Vitamin B6", "nutrientNumber": "B6", "unitName": "mg", "value": 1.0}
+        ],
+        "timestamp": new Date().toISOString()
+    })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));

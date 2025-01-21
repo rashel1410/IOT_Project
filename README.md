@@ -20,3 +20,17 @@
  
 This project is part of ICST - The Interdisciplinary Center for Smart Technologies, Taub Faculty of Computer Science, Technion
 https://icst.cs.technion.ac.il/
+
+
+# In order to run the server:
+pull git repo
+cd into server 
+pip install -r requirements.txt
+python main.py
+
+## in order to reach the server 
+on windows run ipconfig and look for the IPv4 of the network (probably the WiFi)
+MUST BE ON THE SAME WIFI NETWORK (FOR NOW)
+this will be the ip you will use as the endpoint.
+port 8045.
+e.g. http://192.168.167.251:8045/

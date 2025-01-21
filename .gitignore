@@ -1,3 +1,11 @@
 ESP32/SECRETS.h
 eat_smart/build
 .idea/
+eat_smart/android/
+eat_smart/ios/
+**/__pycache__/
+**/.vscode/
+**/.devcontainer/
+server/.env
+server/accountKey.json
+server/vision_api_creds.json
