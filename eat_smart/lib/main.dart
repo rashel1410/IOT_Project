@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'models/user.dart';
+import 'screens/home_screen.dart';
 import 'models/food_item.dart';
 import 'screens/user_nutri_info_screen.dart';
 
@@ -14,8 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: UserFoodScreen(),
+      home: HomeScreen(),
     );
   }
 }
-
