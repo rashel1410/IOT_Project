@@ -6,9 +6,18 @@ import 'models/food_item.dart';
 import 'screens/user_nutri_info_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/add_user_screen.dart';
+import 'package:provider/provider.dart';
+import 'providers/user_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
