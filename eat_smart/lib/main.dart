@@ -4,6 +4,8 @@ import 'models/user.dart';
 import 'screens/home_screen.dart';
 import 'models/food_item.dart';
 import 'screens/user_nutri_info_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/add_user_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Eat Smart',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: HomeScreen(),
+      routes: {
+        '/add_user_screen': (context) => AddUserScreen(),
+      },
     );
   }
 }

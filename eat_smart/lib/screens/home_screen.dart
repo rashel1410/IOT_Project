@@ -38,7 +38,8 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Handle add user action
+                // Navigate to the AddUserScreen
+                Navigator.pushNamed(context, '/add_user_screen');
               },
               child: const Text('Add User'),
             ),

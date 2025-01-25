@@ -6,10 +6,19 @@ import 'food_item.dart';
 class User {
   final String name;
   final List<FoodItem> foods;
-  User({this.name = '', this.foods = const []});
+  final String id;
+  User({this.id = '', this.name = '', this.foods = const []});
 
   String getUserName() {
     return this.name; //name;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'foods': this.foods,
+    };
   }
 
   Future<List<FoodItem>> getUserFoodsMockData() async {
