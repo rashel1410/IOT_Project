@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import '../constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ml/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -23,9 +23,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         foods: [],
       );
 
-      final backendIP = '10.100.102.28';
-      final port = '8045';
-      final url = 'http://$backendIP:$port/add_user';
+      final url = '$baseUrl/add_user';
 
       try {
         final response = await http.post(
@@ -35,16 +33,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
         );
         if (response.statusCode == 200) {
           print('User added to the server');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('User ${user.name} added successfully!')),
+          );
+          Navigator.pop(context, true);
         } else {
           print('Failed to add user to the server');
         }
       } catch (e) {
         print('Error: $e');
       }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User ${user.name} added successfully!')),
-      );
 
       _nameController.clear();
     }

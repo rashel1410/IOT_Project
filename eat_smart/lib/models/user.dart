@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'food_nutrients.dart';
 import 'food_item.dart';
+import '../constants.dart';
 
 class User {
   final String name;
@@ -19,6 +20,13 @@ class User {
       'name': this.name,
       'foods': this.foods,
     };
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+    );
   }
 
   Future<List<FoodItem>> getUserFoodsMockData() async {
@@ -85,9 +93,7 @@ class User {
   }
 
   Future<List<FoodItem>> getUserFoods() async {
-    var backendIP = '192.168.68.110';
-    var port = '8045';
-    var res = await http.get(Uri.parse('http://$backendIP:$port'));
+    var res = await http.get(Uri.parse('$baseUrl'));
     print("Waiting for response from server...");
 
     if (res.statusCode == 200) {

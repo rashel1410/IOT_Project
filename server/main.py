@@ -28,7 +28,7 @@ app.include_router(vision_router)
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://10.100.102.28:8045",
+    "http://10.100.102.7:8045",
     #"http://172.20.10.2:8045",  # Add your local IP address here
     #"http://172.20.10.1:8045",  # Add your local IP address here
     # Add other origins as needed
