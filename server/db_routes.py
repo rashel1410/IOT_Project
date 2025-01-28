@@ -57,7 +57,7 @@ def get_user_foods(user_id: str):
 @router.get("/get_users")
 def get_users():
     users_ref = db.collection("users").stream()
-    users = {user.id: user.to_dict() for user in users_ref}
+    users = {user.id: user.to_dict()["name"] for user in users_ref}
     return users
 
 
