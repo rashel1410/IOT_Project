@@ -20,10 +20,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
       final user = User(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: _nameController.text,
-        foods: [],
+        foodsList: [],
       );
 
-      final url = '$baseUrl/add_user';
+      const url = '$baseUrl/add_user';
 
       try {
         final response = await http.post(

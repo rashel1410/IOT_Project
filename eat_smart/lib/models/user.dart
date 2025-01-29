@@ -6,9 +6,9 @@ import '../constants.dart';
 
 class User {
   final String name;
-  final List<FoodItem> foods;
+  List<FoodItem> foodsList;
   final String id;
-  User({this.id = '', this.name = '', this.foods = const []});
+  User({this.id = '', this.name = '', this.foodsList = const []});
 
   String getUserName() {
     return this.name; //name;
@@ -18,7 +18,7 @@ class User {
     return {
       'id': this.id,
       'name': this.name,
-      'foods': this.foods,
+      'foods': this.foodsList,
     };
   }
 
@@ -26,6 +26,9 @@ class User {
     return User(
       id: json['id'],
       name: json['name'],
+      foodsList: json['foods'] == null
+          ? []
+          : (json['foods'] as List).map((i) => FoodItem.fromJson(i)).toList(),
     );
   }
 
@@ -36,58 +39,58 @@ class User {
         name: 'Apple',
         nutrients: [
           FoodNutrients(
-            nutrientId: 1,
             nutrientName: 'Vitamin C',
             nutrientNumber: 'C',
             unitName: 'mg',
             value: 5.0,
           ),
           FoodNutrients(
-            nutrientId: 2,
             nutrientName: 'Fiber',
             nutrientNumber: 'F',
             unitName: 'g',
             value: 2.0,
           ),
         ],
+        timestamp: DateTime.now().subtract(Duration(days: 2)),
+        id: '1',
       ),
       FoodItem(
         name: 'Banana',
         nutrients: [
           FoodNutrients(
-            nutrientId: 3,
             nutrientName: 'Potassium',
             nutrientNumber: 'K',
             unitName: 'mg',
             value: 10.0,
           ),
           FoodNutrients(
-            nutrientId: 4,
             nutrientName: 'Vitamin B6',
             nutrientNumber: 'B6',
             unitName: 'mg',
             value: 1.0,
           ),
         ],
+        timestamp: DateTime.now().subtract(Duration(days: 1)),
+        id: '2',
       ),
       FoodItem(
         name: 'Carrot',
         nutrients: [
           FoodNutrients(
-            nutrientId: 5,
             nutrientName: 'Vitamin A',
             nutrientNumber: 'A',
             unitName: 'IU',
             value: 100.0,
           ),
           FoodNutrients(
-            nutrientId: 6,
             nutrientName: 'Fiber',
             nutrientNumber: 'F',
             unitName: 'g',
             value: 3.0,
           ),
         ],
+        timestamp: DateTime.now().subtract(Duration(days: 1)),
+        id: '3',
       ),
     ];
   }

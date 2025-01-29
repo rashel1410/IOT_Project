@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart'; // Import your user provider
-import '../models/user.dart'; // Import your user model
+import '../models/user.dart';
+import 'add_user_screen.dart';
+import 'last_food_item_screen.dart'; // Import your user model
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,15 +19,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchUsers();
   }
 
-  void _fetchUsers() {
-    Provider.of<UserProvider>(context, listen: false).fetchUsers();
+  Future<void> _fetchUsers() async {
+    try {
+      await Provider.of<UserProvider>(context, listen: false).fetchUsers();
+    } catch (error) {
+      print('Failed to fetch users: $error');
+    }
+  }
+
+  Future<void> _fetchFoods() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      await userProvider.fetchAllFoods();
+    } catch (error) {
+      print('Failed to fetch foods: $error');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final currentUser = userProvider.currentUser;
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Eat Smart'),
@@ -52,11 +64,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text('Choose a user:'),
                 DropdownButton<String>(
                   value: currentUser?.id,
-                  onChanged: (String? newValue) {
+                  onChanged: (String? newValue) async {
                     if (newValue != null) {
                       final selectedUser =
                           users.firstWhere((user) => user.id == newValue);
                       userProvider.setUser(selectedUser);
+                      await _fetchFoods();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LastFoodItemScreen()),
+                      );
                     }
                   },
                   items: users.map<DropdownMenuItem<String>>((User user) {
@@ -69,13 +87,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    final result =
-                        await Navigator.pushNamed(context, '/add_user_screen');
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddUserScreen()),
+                    );
                     if (result == true) {
-                      _fetchUsers(); // Refresh the user list
+                      await _fetchUsers(); // Refresh the user list
                     }
                   },
-                  child: Text('Add User'),
+                  child: const Text('Add User'),
                 ),
               ],
             ),

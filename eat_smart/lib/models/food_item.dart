@@ -3,19 +3,51 @@ import 'food_nutrients.dart';
 class FoodItem {
   final String name;
   final List<FoodNutrients> nutrients;
+  final DateTime timestamp;
+  final String id;
 
-  FoodItem({required this.name, required this.nutrients});
+  FoodItem(
+      {required this.name,
+      required this.nutrients,
+      required this.timestamp,
+      required this.id});
 
-  FoodItem.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        nutrients = (json['nutrients'] as List)
-            .map((i) => FoodNutrients.fromJson(i))
-            .toList();
+  // String get getName => name;
+  // List<FoodNutrients> get getNutrients => nutrients;
+  // DateTime get getTimestamp => timestamp;
+
+  // set name(String name) {
+  //   this.name = name;
+  // }
+
+  // set nutrients(List<FoodNutrients> nutrients) {
+  //   this.nutrients = nutrients;
+  // }
+
+  // set timestamp(DateTime timestamp) {
+  //   this.timestamp = timestamp;
+  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['name'] = name;
     data['nutrients'] = nutrients.map((v) => v.toJson()).toList();
+    data['timestamp'] = timestamp.toIso8601String();
+    data['id'] = id;
     return data;
+  }
+
+  factory FoodItem.fromJson(Map<String, dynamic> json) {
+    var nutrientsFromJson = json['nutrients'] as List;
+    List<FoodNutrients> nutrientsList = nutrientsFromJson.map((nutrientJson) {
+      return FoodNutrients.fromJson(nutrientJson);
+    }).toList();
+
+    return FoodItem(
+      id: json['id'],
+      name: json['name'],
+      timestamp: DateTime.parse(json['timestamp']),
+      nutrients: nutrientsList,
+    );
   }
 }

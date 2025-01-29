@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/user.dart';
 import 'screens/home_screen.dart';
 import 'models/food_item.dart';
+import 'screens/last_food_item_screen.dart';
 import 'screens/user_nutri_info_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/add_user_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       home: HomeScreen(),
       routes: {
         '/add_user_screen': (context) => AddUserScreen(),
+        '/last_food_item_screen': (context) => LastFoodItemScreen(),
       },
     );
   }

@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from firebase_config import db
 from datetime import datetime
+from fastapi import HTTPException
+import logging
 
 router = APIRouter()
 
@@ -15,6 +17,7 @@ class FoodItem(BaseModel):
     name: str
     nutrients: list[FoodNutrients]
     timestamp: datetime
+    id: str
 
 class User(BaseModel):
     id: str
@@ -30,35 +33,51 @@ def add_user(user: User):
 
 @router.post("/add_food/{user_id}")
 def add_food(user_id: str, food: FoodItem):
-    food_ref = db.collection("users").document(user_id).collection("food_items").document()
+    food_ref = db.collection("users").document(user_id).collection("food_items").document(food.id)
     food_ref.set(food.dict())
     return {"status": "Food added successfully"}
 
 
-@router.get("/get_last_item_nutrition_values")
-def get_last_item_nutrition_values(user_id: str = Query(..., description="The ID of the user")):
+@router.get("/get_last_food_item/{user_id}")
+def get_last_item_food_item(user_id: str):
     foods_ref = db.collection("users").document(user_id).collection("food_items").order_by("timestamp", direction="DESCENDING").limit(1).stream()
     
     last_food_item = next(foods_ref, None)
     if last_food_item:
         food_item = last_food_item.to_dict()
-        return {"food_item": food_item}
+        food_item["id"] = last_food_item.id
+        return food_item
     else:
-        return {"error": "No food items found for the user"}
+        raise HTTPException(status_code=404, detail="No food items found for the user")
+    
+@router.post("/remove_food_item/{user_id}/{item_id}")
+def remove_food_item(user_id: str, item_id: str):
+    user_ref = db.collection("users").document(user_id)
+    food_item_ref = user_ref.collection("food_items").document(item_id)
+    
+    if not food_item_ref.get().exists:
+        raise HTTPException(status_code=404, detail="Food item not found")
+
+    food_item_ref.delete()
+    
+    return {"status": "Food item removed successfully"}
 
 
-@router.get("/get_user_foods")
+@router.get("/get_user_foods/{user_id}")
 def get_user_foods(user_id: str):
     user_foods = {}
     foods_ref = db.collection("users").document(user_id).collection("food_items").stream()
-    user_foods[user_id] = [food.to_dict() for food in foods_ref]
+    user_foods = {food.id : food.to_dict() for food in foods_ref}
     return user_foods
+
+
 
 @router.get("/get_users")
 def get_users():
     users_ref = db.collection("users").stream()
-    users = {user.id: user.to_dict() for user in users_ref}
+    users = {user.id: user.to_dict().get("name", "Unnamed User") for user in users_ref}
     return users
+
 
 
 # Mock data routes
