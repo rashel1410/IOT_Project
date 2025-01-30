@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'models/user.dart';
+import 'screens/food_item_screen.dart';
 import 'screens/home_screen.dart';
 import 'models/food_item.dart';
 import 'screens/last_food_item_screen.dart';
@@ -28,13 +29,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Eat Smart',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
       home: HomeScreen(),
       routes: {
         '/add_user_screen': (context) => AddUserScreen(),
         '/last_food_item_screen': (context) => LastFoodItemScreen(),
+        FoodItemScreen.routeName: (context) => FoodItemScreen(),
       },
     );
   }

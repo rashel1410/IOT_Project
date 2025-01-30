@@ -39,67 +39,82 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Eat Smart'),
+          title: const Text('Home',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          centerTitle: true,
         ),
-        body: Consumer<UserProvider>(builder: (context, userProvider, child) {
-          final currentUser = userProvider.currentUser;
-          final users = userProvider.users;
+        body: SafeArea(
+          child:
+              Consumer<UserProvider>(builder: (context, userProvider, child) {
+            final currentUser = userProvider.currentUser;
+            final users = userProvider.users;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  currentUser != null
-                      ? 'Welcome, ${currentUser.name}!'
-                      : 'Welcome to Eat Smart!',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      currentUser != null
+                          ? 'Welcome, ${currentUser.name}!'
+                          : 'Welcome to Eat Smart!',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+                    const Text('Choose a user:'),
+                    DropdownButton<String>(
+                      value: currentUser?.id,
+                      onChanged: (String? newValue) async {
+                        if (newValue != null) {
+                          final selectedUser =
+                              users.firstWhere((user) => user.id == newValue);
+                          userProvider.setUser(selectedUser);
+                          await _fetchFoods();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LastFoodItemScreen()),
+                          );
+                        }
+                      },
+                      items: users.map<DropdownMenuItem<String>>((User user) {
+                        return DropdownMenuItem<String>(
+                          value: user.id,
+                          child: Text(user.name),
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddUserScreen()),
+                        );
+                        if (result == true) {
+                          await _fetchUsers(); // Refresh the user list
+                        }
+                      },
+                      child: const Text('Add User'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 60),
-                const Text('Choose a user:'),
-                DropdownButton<String>(
-                  value: currentUser?.id,
-                  onChanged: (String? newValue) async {
-                    if (newValue != null) {
-                      final selectedUser =
-                          users.firstWhere((user) => user.id == newValue);
-                      userProvider.setUser(selectedUser);
-                      await _fetchFoods();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LastFoodItemScreen()),
-                      );
-                    }
-                  },
-                  items: users.map<DropdownMenuItem<String>>((User user) {
-                    return DropdownMenuItem<String>(
-                      value: user.id,
-                      child: Text(user.name),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddUserScreen()),
-                    );
-                    if (result == true) {
-                      await _fetchUsers(); // Refresh the user list
-                    }
-                  },
-                  child: const Text('Add User'),
-                ),
-              ],
-            ),
-          );
-        }));
+              ),
+            );
+          }),
+        ));
   }
 }
