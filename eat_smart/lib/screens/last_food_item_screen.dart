@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../models/food_item.dart';
 import 'food_item_screen.dart';
+import 'user_nutri_info_screen.dart';
 
 class LastFoodItemScreen extends StatefulWidget {
   @override
@@ -94,62 +95,115 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
             return const Center(child: Text('No food items found'));
           }
 
-          if (lastFoodItem == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      FoodItemScreen.routeName,
-                      arguments: lastFoodItem,
-                    );
-                  },
-                  child: Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            lastFoodItem.name,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          FoodItemScreen.routeName,
+                          arguments: lastFoodItem,
+                        );
+                      },
+                      child: Container(
+                        margin:
+                            const EdgeInsets.only(top: 25, left: 12, right: 12),
+                        width: 350,
+                        height: 150,
+                        child: Card(
+                          color: Colors.grey[200],
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  lastFoodItem.name,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                const Text('Weight: ${171}g'),
+                                const SizedBox(height: 8),
+                                const Text('Calories: ${100} kcal'),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          const Text('Weight: ${171}g'),
-                          const SizedBox(height: 8),
-                          const Text('Calories: ${100} kcal'),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: _fetchLastFoodItem,
-                      child: const Text('Refresh'),
-                    ),
-                    const SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: _cancelLastFoodItem,
-                      child: const Text('Cancel'),
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: _fetchLastFoodItem,
+                      icon: Icon(Icons.refresh),
+                    ),
+                    const SizedBox(width: 5),
+                    IconButton(
+                      onPressed: _cancelLastFoodItem,
+                      icon: Icon(Icons.cancel),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        MaterialPageRoute(
+                          builder: (context) => UserFoodScreen(),
+                        );
+                      },
+                      child: Container(
+                        margin:
+                            const EdgeInsets.only(top: 25, left: 12, right: 12),
+                        width: 130,
+                        height: 60,
+                        child: Card(
+                          color: Colors.grey[200],
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(1.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'View all',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           );

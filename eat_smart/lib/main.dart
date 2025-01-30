@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/add_user_screen': (context) => AddUserScreen(),
         '/last_food_item_screen': (context) => LastFoodItemScreen(),
         FoodItemScreen.routeName: (context) => FoodItemScreen(),
+        '/user_nutri_info_screen': (context) => UserFoodScreen(),
       },
     );
   }
