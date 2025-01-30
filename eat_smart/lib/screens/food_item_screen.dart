@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/NutrientsList.dart';
 import '../providers/user_provider.dart';
 import '../models/food_item.dart';
 
@@ -70,9 +71,20 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (currentUser != null && currentUser.foodsList.isNotEmpty)
-                  Text(
-                    'Last Food Item: ${selectedFoodItem.name}',
-                    style: const TextStyle(fontSize: 20),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${selectedFoodItem.name}',
+                          style: const TextStyle(fontSize: 30),
+                        ),
+                        Text(
+                          '${selectedFoodItem.nutrients[0].value} calories',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   )
                 else
                   const Text(
@@ -80,19 +92,7 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                     style: TextStyle(fontSize: 20),
                   ),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: _fetchLastFoodItem,
-                      child: const Text('Refresh'),
-                    ),
-                    const SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: _cancelLastFoodItem,
-                      child: const Text('Cancel'),
-                    ),
-                  ],
-                ),
+                NutrientsListWidget(nutrients: selectedFoodItem.nutrients),
               ],
             ),
           );
