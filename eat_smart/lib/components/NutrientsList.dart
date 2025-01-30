@@ -9,17 +9,19 @@ class NutrientsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: nutrients.length,
-      itemBuilder: (context, index) {
-        final nutrient = nutrients[index];
-        return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: buildRow(
-                nutrient.nutrientName, nutrient.value, nutrient.unitName));
-      },
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: nutrients.length,
+        itemBuilder: (context, index) {
+          final nutrient = nutrients[index];
+          return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: buildRow(
+                  nutrient.nutrientName, nutrient.value, nutrient.unitName));
+        },
+      ),
     );
   }
 
