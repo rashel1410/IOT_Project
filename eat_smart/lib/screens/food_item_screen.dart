@@ -65,36 +65,70 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
           final currentUser = userProvider.currentUser;
           final users = userProvider.users;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (currentUser != null && currentUser.foodsList.isNotEmpty)
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return Column(
+            children: [
+              if (currentUser != null && currentUser.foodsList.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 25, left: 12, right: 12),
+                    child: Column(
                       children: [
-                        Text(
-                          '${selectedFoodItem.name}',
-                          style: const TextStyle(fontSize: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${selectedFoodItem.name}',
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              '171 gr',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
                         ),
-                        Text(
-                          '${selectedFoodItem.nutrients[0].value} calories',
-                          style: const TextStyle(fontSize: 20),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${selectedFoodItem.nutrients[0].value} calories',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  )
-                else
-                  const Text(
-                    'No food item found',
-                    style: TextStyle(fontSize: 20),
                   ),
-                const SizedBox(height: 20),
-                NutrientsListWidget(nutrients: selectedFoodItem.nutrients),
-              ],
-            ),
+                )
+              else
+                const Text(
+                  'No food item found',
+                  style: TextStyle(fontSize: 20),
+                ),
+              const SizedBox(height: 30),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 153, 187, 237),
+                    ),
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 18, right: 18),
+                    child: NutrientsListWidget(
+                        nutrients: selectedFoodItem.nutrients),
+                  ),
+                ),
+              )
+            ],
           );
         },
       ),

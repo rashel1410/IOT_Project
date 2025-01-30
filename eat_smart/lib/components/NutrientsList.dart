@@ -9,19 +9,23 @@ class NutrientsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemCount: nutrients.length,
-        itemBuilder: (context, index) {
-          final nutrient = nutrients[index];
-          return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: buildRow(
-                  nutrient.nutrientName, nutrient.value, nutrient.unitName));
-        },
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemCount: nutrients.length,
+            itemBuilder: (context, index) {
+              final nutrient = nutrients[index];
+              return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: buildRow(nutrient.nutrientName, nutrient.value,
+                      nutrient.unitName));
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -31,7 +35,7 @@ class NutrientsListWidget extends StatelessWidget {
       margin: const EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
         color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
         children: [
