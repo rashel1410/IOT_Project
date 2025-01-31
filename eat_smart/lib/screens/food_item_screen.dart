@@ -84,8 +84,8 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const Text(
-                              '171 gr',
+                            Text(
+                              '${selectedFoodItem.weight} gr',
                               style: const TextStyle(fontSize: 20),
                             ),
                           ],

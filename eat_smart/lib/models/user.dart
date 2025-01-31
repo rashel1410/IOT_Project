@@ -53,6 +53,7 @@ class User {
         ],
         timestamp: DateTime.now().subtract(Duration(days: 2)),
         id: '1',
+        weight: 100.0,
       ),
       FoodItem(
         name: 'Banana',
@@ -72,6 +73,7 @@ class User {
         ],
         timestamp: DateTime.now().subtract(Duration(days: 1)),
         id: '2',
+        weight: 120.0,
       ),
       FoodItem(
         name: 'Carrot',
@@ -91,6 +93,7 @@ class User {
         ],
         timestamp: DateTime.now().subtract(Duration(days: 1)),
         id: '3',
+        weight: 80.0,
       ),
     ];
   }

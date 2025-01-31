@@ -5,12 +5,14 @@ class FoodItem {
   final List<FoodNutrients> nutrients;
   final DateTime timestamp;
   final String id;
+  final double weight;
 
   FoodItem(
       {required this.name,
       required this.nutrients,
       required this.timestamp,
-      required this.id});
+      required this.id,
+      required this.weight});
 
   // String get getName => name;
   // List<FoodNutrients> get getNutrients => nutrients;
@@ -34,6 +36,7 @@ class FoodItem {
     data['nutrients'] = nutrients.map((v) => v.toJson()).toList();
     data['timestamp'] = timestamp.toIso8601String();
     data['id'] = id;
+    data['weight'] = weight.toString();
     return data;
   }
 
@@ -44,10 +47,11 @@ class FoodItem {
     }).toList();
 
     return FoodItem(
-      id: json['id'],
       name: json['name'],
-      timestamp: DateTime.parse(json['timestamp']),
       nutrients: nutrientsList,
+      timestamp: DateTime.parse(json['timestamp']),
+      id: json['id'],
+      weight: json['weight'].toDouble(),
     );
   }
 }

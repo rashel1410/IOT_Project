@@ -59,6 +59,7 @@ class UserProvider with ChangeNotifier {
                 .map<FoodNutrients>(
                     (nutrient) => FoodNutrients.fromJson(nutrient))
                 .toList(),
+            weight: foodData['weight'],
           );
           //FoodItem foodItem = FoodItem.fromJson(foodData);
           return foodItemFromJson;
