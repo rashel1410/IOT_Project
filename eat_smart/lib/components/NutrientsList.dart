@@ -14,7 +14,7 @@ class NutrientsListWidget extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             itemCount: nutrients.length,
             itemBuilder: (context, index) {
               final nutrient = nutrients[index];

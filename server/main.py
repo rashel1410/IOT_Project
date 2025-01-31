@@ -1,4 +1,5 @@
 import os
+import time
 import shutil
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request, File, Form, UploadFile
@@ -7,7 +8,7 @@ from fastapi.responses import JSONResponse
 from models import MsgPayload
 from db_routes import router as db_router
 import db_routes
-from vision_api_routes import router as vision_router
+# from vision_api_routes import router as vision_router
 from gemini_service import analyze_food_with_gemini
 from pydantic import BaseModel
 from PIL import Image
@@ -16,19 +17,20 @@ from dotenv import load_dotenv
 from db_routes import FoodItem, FoodNutrients, add_food, add_user_mock_data
 from dateutil.parser import parse
 import json
+from usda_api import search_food_item_with_http_client
 
 
 
 
 app = FastAPI()
 app.include_router(db_router)
-app.include_router(vision_router)
+# app.include_router(vision_router)
 
 # Configure CORS
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://132.68.47.119:8045",
+    "http://132.68.34.61:8045",
     #"http://172.20.10.2:8045",  # Add your local IP address here
     #"http://172.20.10.1:8045",  # Add your local IP address here
     # Add other origins as needed
@@ -103,22 +105,42 @@ async def upload_image(request: Request):
     
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+    
 
 
+def get_weight_from_file() -> float:
+    try:
+        with open("/Users/rashelstrigevsky/development/IOT/IOT_Project/server/uploaded/weights.json", "r") as file:
+            data = json.load(file)
+            weight = float(data["weight"])
+            return weight
+    except Exception as e:
+        raise ValueError("Failed to get weight from file: " + str(e))
+
+
+            
 @app.post("/upload_data")
 async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
     #image_path = "Banana.jpg"
     # Save weight to JSON file
     weights_data = {"weight": weight}
-    with open("uploaded/weights.json", "w") as f:
+    # with open("uploaded/weights.json", "w") as f:
+    with open("/Users/rashelstrigevsky/development/IOT/IOT_Project/server/uploaded/weights.json", "w") as f:
         json.dump(weights_data, f)
     
     image_path = "uploaded/captured_image.jpg"
+    image_path = "/Users/rashelstrigevsky/development/IOT/IOT_Project/server/uploaded/captured_image.jpg"
     with open(image_path, "wb") as file:
         file.write(await image.read())
 
 
-    food_item_json = analyze_food_with_gemini(image_path)
+    food_item_name = analyze_food_with_gemini(image_path)
+
+    # Search for the food item in the USDA FoodData Central API
+    food_info = search_food_item_with_http_client(food_item_name)
+    food_item_json = food_info["foods"][0]
+    food_nutrients_json = food_item_json["foodNutrients"]
+
     nutrients_list = [
     FoodNutrients(
         nutrientName=nutrient["nutrientName"],
@@ -126,15 +148,21 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
         unitName=nutrient["unitName"],
         value=float(nutrient["value"])
     )
-    for nutrient in food_item_json["nutrients"]
-]
+    for nutrient in food_nutrients_json
+    ]
+
+    food_item_weight = get_weight_from_file()
 
     # Create the FoodItem object
-    parsed_timestamp = parse(food_item_json["timestamp"])
+
+    current_time = time.time()
+    generate_id = str(current_time)
     food_item = FoodItem(
-        name=food_item_json["name"],
+        name=food_item_name,
         nutrients=nutrients_list,
-        timestamp=parsed_timestamp
+        timestamp=current_time,
+        id=generate_id,
+        weight=food_item_weight
     )
 
 
@@ -142,7 +170,7 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
     print("Food name:", food_item.name)
     print("First nutrient name:", food_item.nutrients[0].nutrientName)
 
-    default_user_id = "user2"
+    default_user_id = "1738326584433"
     add_food(user_id=default_user_id, food=food_item)
         
     return {"message": "Data uploaded successfully"}

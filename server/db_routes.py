@@ -17,7 +17,8 @@ class FoodItem(BaseModel):
     name: str
     nutrients: list[FoodNutrients]
     timestamp: datetime
-    id: str
+    id: str = None
+    weight: float
 
 class User(BaseModel):
     id: str
