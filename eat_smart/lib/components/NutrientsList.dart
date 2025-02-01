@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/food_nutrients.dart';
 
 class NutrientsListWidget extends StatelessWidget {
-  final List<FoodNutrients> nutrients;
+  final List<Nutrient> nutrients;
 
   const NutrientsListWidget({Key? key, required this.nutrients})
       : super(key: key);
@@ -21,7 +21,7 @@ class NutrientsListWidget extends StatelessWidget {
               return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: buildRow(nutrient.nutrientName, nutrient.value,
-                      nutrient.unitName));
+                      nutrient.unitName.toLowerCase()));
             },
           ),
         ),
@@ -38,9 +38,14 @@ class NutrientsListWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '$nutrientName: $value $unitName',
+            '$nutrientName:',
+            style: const TextStyle(fontSize: 16),
+          ),
+          Text(
+            '$value $unitName',
             style: const TextStyle(fontSize: 16),
           ),
         ],
