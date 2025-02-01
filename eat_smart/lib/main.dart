@@ -1,5 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_ml/screens/all_food_items_screen.dart';
 import 'models/user.dart';
 import 'screens/food_item_screen.dart';
 import 'screens/home_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/add_user_screen': (context) => AddUserScreen(),
         '/last_food_item_screen': (context) => LastFoodItemScreen(),
         FoodItemScreen.routeName: (context) => FoodItemScreen(),
-        '/user_nutri_info_screen': (context) => UserFoodScreen(),
+        AllFoodItemsScreen.routeName: (context) => AllFoodItemsScreen(),
       },
     );
   }

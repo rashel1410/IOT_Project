@@ -47,6 +47,7 @@ def get_last_item_food_item(user_id: str):
     if last_food_item:
         food_item = last_food_item.to_dict()
         food_item["id"] = last_food_item.id
+        print(food_item)
         return food_item
     else:
         raise HTTPException(status_code=404, detail="No food items found for the user")
@@ -69,6 +70,7 @@ def get_user_foods(user_id: str):
     user_foods = {}
     foods_ref = db.collection("users").document(user_id).collection("food_items").stream()
     user_foods = {food.id : food.to_dict() for food in foods_ref}
+    #print(user_foods)
     return user_foods
 
 

@@ -4,17 +4,16 @@ import '../components/NutrientsList.dart';
 import '../providers/user_provider.dart';
 import '../models/food_item.dart';
 
-class FoodItemScreen extends StatefulWidget {
-  static String routeName = '/food_item_screen.dart';
-  final FoodItem? foodItem;
+class AllFoodItemsScreen extends StatefulWidget {
+  static String routeName = '/all_food_items_sceen.dart';
 
-  const FoodItemScreen({Key? key, this.foodItem}) : super(key: key);
+  const AllFoodItemsScreen({Key? key}) : super(key: key);
 
   @override
-  _FoodItemScreenState createState() => _FoodItemScreenState();
+  _AllFoodItemsScreenState createState() => _AllFoodItemsScreenState();
 }
 
-class _FoodItemScreenState extends State<FoodItemScreen> {
+class _AllFoodItemsScreenState extends State<AllFoodItemsScreen> {
   @override
   void initState() {
     super.initState();
@@ -22,13 +21,11 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final FoodItem selectedFoodItem =
-        ModalRoute.of(context)!.settings.arguments as FoodItem;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Food Item Info',
-            style: TextStyle(
+        title: Text('Today ${DateTime.now().toString().split(' ')[0]}',
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -40,7 +37,6 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
       body: Consumer<UserProvider>(
         builder: (context, userProvider, child) {
           final currentUser = userProvider.currentUser;
-          final users = userProvider.users;
 
           return Column(
             children: [
@@ -49,31 +45,31 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
                     margin: const EdgeInsets.only(top: 25, left: 12, right: 12),
-                    child: Column(
+                    child: const Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${selectedFoodItem.name}',
-                              style: const TextStyle(
+                              'food1',
+                              style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              '${selectedFoodItem.weight} gr',
-                              style: const TextStyle(fontSize: 20),
+                              ' gr',
+                              style: TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 5),
+                        SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '${selectedFoodItem.nutrients[0].value} calories',
-                              style: const TextStyle(fontSize: 16),
+                              '23 calories',
+                              style: TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
@@ -87,21 +83,11 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                   style: TextStyle(fontSize: 20),
                 ),
               const SizedBox(height: 30),
-              Expanded(
+              const Expanded(
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 153, 187, 237),
-                    ),
-                    padding:
-                        const EdgeInsets.only(top: 40, left: 18, right: 18),
-                    child: NutrientsListWidget(
-                        nutrients: selectedFoodItem.nutrients),
                   ),
                 ),
               )

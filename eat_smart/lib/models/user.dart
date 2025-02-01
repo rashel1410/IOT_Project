@@ -38,13 +38,13 @@ class User {
       FoodItem(
         name: 'Apple',
         nutrients: [
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Vitamin C',
             nutrientNumber: 'C',
             unitName: 'mg',
             value: 5.0,
           ),
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Fiber',
             nutrientNumber: 'F',
             unitName: 'g',
@@ -58,13 +58,13 @@ class User {
       FoodItem(
         name: 'Banana',
         nutrients: [
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Potassium',
             nutrientNumber: 'K',
             unitName: 'mg',
             value: 10.0,
           ),
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Vitamin B6',
             nutrientNumber: 'B6',
             unitName: 'mg',
@@ -78,13 +78,13 @@ class User {
       FoodItem(
         name: 'Carrot',
         nutrients: [
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Vitamin A',
             nutrientNumber: 'A',
             unitName: 'IU',
             value: 100.0,
           ),
-          FoodNutrients(
+          Nutrient(
             nutrientName: 'Fiber',
             nutrientNumber: 'F',
             unitName: 'g',

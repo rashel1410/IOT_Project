@@ -2,7 +2,7 @@ import 'food_nutrients.dart';
 
 class FoodItem {
   final String name;
-  final List<FoodNutrients> nutrients;
+  final List<Nutrient> nutrients;
   final DateTime timestamp;
   final String id;
   final double weight;
@@ -42,8 +42,8 @@ class FoodItem {
 
   factory FoodItem.fromJson(Map<String, dynamic> json) {
     var nutrientsFromJson = json['nutrients'] as List;
-    List<FoodNutrients> nutrientsList = nutrientsFromJson.map((nutrientJson) {
-      return FoodNutrients.fromJson(nutrientJson);
+    List<Nutrient> nutrientsList = nutrientsFromJson.map((nutrientJson) {
+      return Nutrient.fromJson(nutrientJson);
     }).toList();
 
     return FoodItem(

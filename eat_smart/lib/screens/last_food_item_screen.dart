@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../models/food_item.dart';
+import 'all_food_items_screen.dart';
 import 'food_item_screen.dart';
 import 'user_nutri_info_screen.dart';
 
@@ -14,15 +15,14 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchLastFoodItem();
   }
 
-  Future<void> _fetchLastFoodItem() async {
+  Future<void> _updateLastFoodItem() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      await userProvider.fetchLastFoodItem();
+      await userProvider.fetchAllFoods();
     } catch (error) {
-      print('Failed to fetch last food item: $error');
+      print('Failed to update last food item: $error');
     }
   }
 
@@ -30,7 +30,8 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       await userProvider.cancelLastFoodItem();
-      setState(() {}); // Refresh the UI after canceling the last food item
+      //await userProvider.fetchLastFoodItem();
+      //await userProvider.fetchAllFoods();
     } catch (error) {
       print('Failed to cancel last food item: $error');
     }
@@ -40,6 +41,7 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final currentUser = userProvider.currentUser;
+
     if (currentUser == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -68,7 +70,6 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
         ),
       );
     }
-    final lastFoodItem = currentUser.foodsList.last;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -94,6 +95,11 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
           if (currentUser.foodsList.isEmpty) {
             return const Center(child: Text('No food items found'));
           }
+          if (userProvider.lastFoodItem == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          //final lastFoodItem = currentUser.foodsList.last;
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -108,7 +114,7 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                         Navigator.pushNamed(
                           context,
                           FoodItemScreen.routeName,
-                          arguments: lastFoodItem,
+                          arguments: userProvider.lastFoodItem,
                         );
                       },
                       child: Container(
@@ -129,14 +135,15 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  lastFoodItem.name,
+                                  userProvider.lastFoodItem!.name,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Text('Weight: ${lastFoodItem.weight}g'),
+                                Text(
+                                    'Weight: ${userProvider.lastFoodItem!.weight}g'),
                                 const SizedBox(height: 8),
                                 const Text('Calories: ${100} kcal'),
                               ],
@@ -152,7 +159,7 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      onPressed: _fetchLastFoodItem,
+                      onPressed: _updateLastFoodItem,
                       icon: Icon(Icons.refresh),
                     ),
                     const SizedBox(width: 5),
@@ -168,9 +175,8 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        MaterialPageRoute(
-                          builder: (context) => UserFoodScreen(),
-                        );
+                        Navigator.pushNamed(
+                            context, AllFoodItemsScreen.routeName);
                       },
                       child: Container(
                         margin:

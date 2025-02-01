@@ -1,16 +1,16 @@
-class FoodNutrients {
+class Nutrient {
   String nutrientName;
   String nutrientNumber;
   String unitName;
   double value;
 
-  FoodNutrients(
+  Nutrient(
       {required this.nutrientName,
       required this.nutrientNumber,
       required this.unitName,
       required this.value});
 
-  FoodNutrients.fromJson(Map<String, dynamic> json)
+  Nutrient.fromJson(Map<String, dynamic> json)
       : nutrientName = json['nutrientName'],
         nutrientNumber = json['nutrientNumber'],
         unitName = json['unitName'],

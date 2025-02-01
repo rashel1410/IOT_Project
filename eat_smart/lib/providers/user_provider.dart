@@ -9,9 +9,11 @@ import '../models/food_item.dart';
 class UserProvider with ChangeNotifier {
   User? _currentUser;
   List<User> _users = [];
+  FoodItem? _lastFoodItem;
 
   User? get currentUser => _currentUser;
   List<User> get users => _users;
+  FoodItem? get lastFoodItem => _lastFoodItem;
 
   Future<void> fetchUsers() async {
     final response = await http.get(Uri.parse('$baseUrl/get_users'));
@@ -35,6 +37,7 @@ class UserProvider with ChangeNotifier {
 
   void setUser(User user) {
     _currentUser = user;
+    fetchAllFoods();
     notifyListeners();
   }
 
@@ -56,10 +59,9 @@ class UserProvider with ChangeNotifier {
             name: foodData['name'],
             timestamp: DateTime.parse(foodData['timestamp']),
             nutrients: foodData['nutrients']
-                .map<FoodNutrients>(
-                    (nutrient) => FoodNutrients.fromJson(nutrient))
+                .map<Nutrient>((nutrient) => Nutrient.fromJson(nutrient))
                 .toList(),
-            weight: foodData['weight'],
+            weight: foodData['weight'].toDouble(),
           );
           //FoodItem foodItem = FoodItem.fromJson(foodData);
           return foodItemFromJson;
@@ -70,6 +72,9 @@ class UserProvider with ChangeNotifier {
 
         // Store the sorted list in the User object
         _currentUser!.foodsList = foodList;
+        _lastFoodItem = _currentUser!.foodsList.isNotEmpty
+            ? _currentUser!.foodsList.last
+            : null;
         notifyListeners();
       } else {
         throw Exception('Failed to load foods');
@@ -83,7 +88,6 @@ class UserProvider with ChangeNotifier {
           .get(Uri.parse('$baseUrl/get_last_food_item/${_currentUser!.id}'));
       if (response.statusCode == 200) {
         final lastFoodItem = FoodItem.fromJson(json.decode(response.body));
-        _currentUser!.foodsList.add(lastFoodItem);
         notifyListeners();
       } else {
         throw Exception('Failed to load last food item');
@@ -103,6 +107,8 @@ class UserProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         _currentUser!.foodsList.removeLast();
+        await fetchAllFoods();
+
         notifyListeners();
       } else {
         throw Exception('Failed to remove food item: ${response.body}');
