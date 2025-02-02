@@ -54,11 +54,15 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${selectedFoodItem.name}',
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            Flexible(
+                              child: Text(
+                                '${selectedFoodItem.name}',
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                             ),
                             Text(
@@ -87,27 +91,39 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                   style: TextStyle(fontSize: 20),
                 ),
               const SizedBox(height: 30),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 153, 187, 237),
-                    ),
-                    padding:
-                        const EdgeInsets.only(top: 40, left: 18, right: 18),
-                    child: NutrientsListWidget(
-                        nutrients: selectedFoodItem.nutrients),
-                  ),
-                ),
-              )
+              NutrientsListInContainer(selectedFoodItem: selectedFoodItem)
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class NutrientsListInContainer extends StatelessWidget {
+  const NutrientsListInContainer({
+    Key? key,
+    required this.selectedFoodItem,
+  }) : super(key: key);
+
+  final FoodItem selectedFoodItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50),
+        ),
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 153, 187, 237),
+          ),
+          padding: const EdgeInsets.only(top: 40, left: 18, right: 18),
+          child: NutrientsList(nutrients: selectedFoodItem.nutrients),
+        ),
       ),
     );
   }

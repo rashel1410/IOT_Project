@@ -1,7 +1,11 @@
 // lib/main.dart
+import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/material.dart';
 import 'package:flutter_ml/screens/all_food_items_screen.dart';
 import 'models/user.dart';
+import 'screens/edit_goals_screen.dart';
 import 'screens/food_item_screen.dart';
 import 'screens/home_screen.dart';
 import 'models/food_item.dart';
@@ -13,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'providers/user_provider.dart';
 
 void main() {
+  tz.initializeTimeZones();
   runApp(
     MultiProvider(
       providers: [
@@ -37,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/last_food_item_screen': (context) => LastFoodItemScreen(),
         FoodItemScreen.routeName: (context) => FoodItemScreen(),
         AllFoodItemsScreen.routeName: (context) => AllFoodItemsScreen(),
+        EditGoalsScreen.routeName: (context) => EditGoalsScreen(),
       },
     );
   }

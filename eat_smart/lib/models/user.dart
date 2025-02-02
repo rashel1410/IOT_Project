@@ -3,12 +3,15 @@ import 'package:http/http.dart' as http;
 import 'food_nutrients.dart';
 import 'food_item.dart';
 import '../constants.dart';
+import 'goals.dart';
 
 class User {
   final String name;
   List<FoodItem> foodsList;
   final String id;
-  User({this.id = '', this.name = '', this.foodsList = const []});
+  Goals? goals;
+
+  User({this.id = '', this.name = '', this.foodsList = const [], this.goals});
 
   String getUserName() {
     return this.name; //name;
@@ -19,6 +22,7 @@ class User {
       'id': this.id,
       'name': this.name,
       'foods': this.foodsList,
+      'goals': this.goals?.toJson(),
     };
   }
 
@@ -29,6 +33,7 @@ class User {
       foodsList: json['foods'] == null
           ? []
           : (json['foods'] as List).map((i) => FoodItem.fromJson(i)).toList(),
+      goals: json['goals'] != null ? Goals.fromJson(json['goals']) : null,
     );
   }
 

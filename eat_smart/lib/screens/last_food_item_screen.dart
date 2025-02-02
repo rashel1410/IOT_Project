@@ -140,6 +140,8 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                 ),
                                 const SizedBox(height: 8),
                                 Text(

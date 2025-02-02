@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/food_nutrients.dart';
 
-class NutrientsListWidget extends StatelessWidget {
+class NutrientsList extends StatelessWidget {
   final List<Nutrient> nutrients;
 
-  const NutrientsListWidget({Key? key, required this.nutrients})
-      : super(key: key);
+  const NutrientsList({Key? key, required this.nutrients}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +12,34 @@ class NutrientsListWidget extends StatelessWidget {
       children: [
         Expanded(
           child: ListView.builder(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
+            //shrinkWrap: true,
+            //physics: const ScrollPhysics(),
             itemCount: nutrients.length,
             itemBuilder: (context, index) {
               final nutrient = nutrients[index];
-              return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: buildRow(nutrient.nutrientName, nutrient.value,
-                      nutrient.unitName.toLowerCase()));
+              return Card(
+                elevation: 5,
+                child: ListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${nutrient.nutrientName}:',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        '${nutrient.value} ${nutrient.unitName}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+
+              // return Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 5.0),
+              //     child: buildRow(nutrient.nutrientName, nutrient.value,
+              //         nutrient.unitName.toLowerCase()));
             },
           ),
         ),
@@ -42,11 +60,11 @@ class NutrientsListWidget extends StatelessWidget {
         children: [
           Text(
             '$nutrientName:',
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 14),
           ),
           Text(
             '$value $unitName',
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 14),
           ),
         ],
       ),

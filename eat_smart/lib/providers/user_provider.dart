@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/food_nutrients.dart';
+import '../models/goals.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -24,6 +25,7 @@ class UserProvider with ChangeNotifier {
           'id': entry.key,
           'name': entry.value,
           'foods': [],
+          'goals': null,
         };
         // Add the ID to the user data
         return User.fromJson(userDataJson);
@@ -113,6 +115,42 @@ class UserProvider with ChangeNotifier {
       } else {
         throw Exception('Failed to remove food item: ${response.body}');
       }
+    }
+  }
+
+  void setGoals(
+      {required double calories,
+      required double proteins,
+      required double carbs,
+      required double fats}) {
+    if (_currentUser != null) {
+      _currentUser!.goals = Goals(
+        calories: calories,
+        proteins: proteins,
+        carbs: carbs,
+        fats: fats,
+      );
+      notifyListeners();
+    }
+  }
+
+  //TODO: Implement the fetchGoals method
+  Future<void> fetchGoals() async {
+    final url = Uri.parse(
+        'https://your-api-endpoint.com/user/goals'); // Replace with your API endpoint
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final goalsData = json.decode(response.body);
+        _currentUser!.goals = Goals.fromJson(goalsData);
+        notifyListeners();
+      } else {
+        throw Exception('Failed to fetch goals: ${response.body}');
+      }
+    } catch (error) {
+      throw error;
     }
   }
 }
