@@ -129,10 +129,10 @@ class _ProgressCardState extends State<ProgressCard> {
               ),
             );
           }
-          final caloriesGoal = currentUser.goals?.calories;
-          final proteinsGoal = currentUser.goals?.proteins;
-          final carbsGoal = currentUser.goals?.carbs;
-          final fatsGoal = currentUser.goals?.fats;
+          final caloriesGoal = currentUser.goals?.calories ?? 2000;
+          final proteinsGoal = currentUser.goals?.proteins ?? 50;
+          final carbsGoal = currentUser.goals?.carbs ?? 500;
+          final fatsGoal = currentUser.goals?.fats ?? 50;
 
           if (foods.isEmpty) {
             return const Center(
@@ -167,29 +167,29 @@ class _ProgressCardState extends State<ProgressCard> {
                     ),
                     NutrientProgress(
                       nutrient: calories,
-                      goal: calories.value,
-                      progress: calories.value / 2000,
+                      goal: caloriesGoal,
+                      progress: (calories.value / caloriesGoal) * 100,
                       progressColor: Colors.red,
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: proteins,
-                      goal: proteins.value,
-                      progress: proteins.value / 1000,
+                      goal: proteinsGoal,
+                      progress: (proteins.value / caloriesGoal) * 100,
                       progressColor: Colors.green,
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: carbs,
-                      goal: carbs.value,
-                      progress: carbs.value / 1000,
+                      goal: carbsGoal,
+                      progress: (carbs.value / caloriesGoal) * 100,
                       progressColor: Colors.blue,
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: fats,
-                      goal: fats.value,
-                      progress: fats.value / 1000,
+                      goal: fatsGoal,
+                      progress: (fats.value / caloriesGoal) * 100,
                       progressColor: Colors.purple,
                       width: progressorWidth,
                     ),

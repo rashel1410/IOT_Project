@@ -181,25 +181,6 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...), us
     return {"message": "Data uploaded successfully"}
 
 
-@app.post("/set_goals/{user_id}")
-async def set_goal(calories: float, protein: float, carbs: float, fats: float, user_id: str = None):
-    # Access the values from the new_goal dictionary
-    user_ref = db.collection("users").document(user_id)
-    goals_obj = user_ref.get().to_dict()["goals"]
-    goals_obj["calories"] = calories
-    goals_obj["fats"] = fats
-    goals_obj["protein"] = protein
-    goals_obj["carbs"] = carbs
-    user_ref.update({"goals": goals_obj})
-    # return user_ref.get("goals")
-    return {"message": "Goal updated successfully"}
-   
-@app.get("/get_goals/{user_id}")
-async def get_goals(user_id: str):
-    user_ref = db.collection("users").document(user_id)
-    goals_obj = user_ref.get().to_dict()["goals"]
-    return goals_obj   
-
 
 if __name__ == "__main__":
     print("Starting server...")

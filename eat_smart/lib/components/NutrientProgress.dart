@@ -19,6 +19,8 @@ class NutrientProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double percent = progress / 100;
+    percent = percent > 1.0 ? 1.0 : percent;
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +38,9 @@ class NutrientProgress extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                nutrient.value.toString() + " " + nutrient.unitName,
+                nutrient.value.toStringAsFixed(1).toString() +
+                    " " +
+                    nutrient.unitName,
                 style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
@@ -54,10 +58,10 @@ class NutrientProgress extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 85,
                   animation: false,
                   lineHeight: 15.0,
-                  percent: 0.8,
-                  center: const Text(
-                    "80.0%",
-                    style: TextStyle(
+                  percent: percent,
+                  center: Text(
+                    "${progress.toStringAsFixed(1)}%",
+                    style: const TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
