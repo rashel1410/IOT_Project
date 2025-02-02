@@ -44,36 +44,32 @@ class NutrientProgress extends StatelessWidget {
               ),
             ],
           ),
-          // Row(
-          //   //mainAxisSize: MainAxisSize.max,
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: <Widget>[
-          //     Stack(
-          //       children: <Widget>[
-          //         Padding(
-          //           padding: EdgeInsets.all(10.0),
-          //           child: LinearPercentIndicator(
-          //             width: MediaQuery.of(context).size.width - 50,
-          //             animation: false,
-          //             lineHeight: 15.0,
-          //             percent: 0.8,
-          //             center: const Text(
-          //               "80.0%",
-          //               style: TextStyle(
-          //                 fontSize: 10.0,
-          //                 fontWeight: FontWeight.w400,
-          //                 color: Colors.black,
-          //               ),
-          //             ),
-          //             // linearStrokeCap: LinearStrokeCap.roundAll,
+          Row(
+            //mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: LinearPercentIndicator(
+                  width: MediaQuery.of(context).size.width - 90,
+                  animation: false,
+                  lineHeight: 15.0,
+                  percent: 0.8,
+                  center: const Text(
+                    "80.0%",
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                  // linearStrokeCap: LinearStrokeCap.roundAll,
 
-          //             progressColor: Colors.redAccent,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
+                  progressColor: Colors.redAccent,
+                ),
+              ),
+            ],
+          ),
         ],
       );
     });
