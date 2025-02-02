@@ -1,4 +1,5 @@
 import os
+import pytz
 import time
 import shutil
 import uvicorn
@@ -18,6 +19,8 @@ from db_routes import FoodItem, FoodNutrients, add_food, add_user_mock_data
 from dateutil.parser import parse
 import json
 from usda_api import search_food_item_with_http_client
+from datetime import datetime
+from firebase_config import db
 
 
 
@@ -30,9 +33,9 @@ app.include_router(db_router)
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://132.68.34.61:8045",
-    #"http://172.20.10.2:8045",  # Add your local IP address here
-    #"http://172.20.10.1:8045",  # Add your local IP address here
+    "http://172.20.10.2:8045",
+    #"http://10.100.102.7:8045",  # Add your local IP address here
+    #"http://132.69.234.13:8045",  # Add your local IP address here
     # Add other origins as needed
 ]
 
@@ -119,8 +122,8 @@ def get_weight_from_file() -> float:
 
 
             
-@app.post("/upload_data")
-async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
+@app.post("/upload_data/{username}")
+async def upload_data(weight: str = Form(...), image: UploadFile = File(...), username: str = None):
     #image_path = "Banana.jpg"
     # Save weight to JSON file
     weights_data = {"weight": weight}
@@ -155,7 +158,8 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
 
     # Create the FoodItem object
 
-    current_time = time.time()
+    israel_tz = pytz.timezone('Asia/Jerusalem')
+    current_time = datetime.now(israel_tz)
     generate_id = str(current_time)
     food_item = FoodItem(
         name=food_item_name,
@@ -170,10 +174,31 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...)):
     print("Food name:", food_item.name)
     print("First nutrient name:", food_item.nutrients[0].nutrientName)
 
-    default_user_id = "1738326584433"
-    add_food(user_id=default_user_id, food=food_item)
+    # default_user_id = "user2"
+    
+    add_food(user_id=username, food=food_item)
         
     return {"message": "Data uploaded successfully"}
+
+
+@app.post("/set_goals/{username}")
+async def set_goal(calories: float, protein: float, carbs: float, fats: float, username: str = None):
+    # Access the values from the new_goal dictionary
+    user_ref = db.collection("users").document(username)
+    goals_obj = user_ref.get().to_dict()["goals"]
+    goals_obj["calories"] = calories
+    goals_obj["fats"] = fats
+    goals_obj["protein"] = protein
+    goals_obj["carbs"] = carbs
+    user_ref.update({"goals": goals_obj})
+    # return user_ref.get("goals")
+    return {"message": "Goal updated successfully"}
+   
+@app.get("/get_goals/{username}")
+async def get_goals(username: str):
+    user_ref = db.collection("users").document(username)
+    goals_obj = user_ref.get().to_dict()["goals"]
+    return goals_obj   
 
 
 if __name__ == "__main__":
