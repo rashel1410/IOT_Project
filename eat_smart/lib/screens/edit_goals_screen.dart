@@ -49,7 +49,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Goals'),
+        title: const Text('Edit Goals'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -59,7 +59,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
             children: [
               TextFormField(
                 controller: _caloriesController,
-                decoration: InputDecoration(labelText: 'Calories'),
+                decoration: const InputDecoration(labelText: 'Calories'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -70,7 +70,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
               ),
               TextFormField(
                 controller: _proteinsController,
-                decoration: InputDecoration(labelText: 'Proteins'),
+                decoration: const InputDecoration(labelText: 'Proteins'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

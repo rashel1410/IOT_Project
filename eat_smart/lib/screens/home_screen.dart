@@ -36,6 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _fetchGoals() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      await userProvider.fetchGoals();
+    } catch (error) {
+      print('Failed to fetch goals: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               users.firstWhere((user) => user.id == newValue);
                           userProvider.setUser(selectedUser);
                           await _fetchFoods();
+                          await _fetchGoals();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

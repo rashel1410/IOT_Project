@@ -15,6 +15,7 @@ class UserProvider with ChangeNotifier {
   User? get currentUser => _currentUser;
   List<User> get users => _users;
   FoodItem? get lastFoodItem => _lastFoodItem;
+  Goals? get goals => _currentUser?.goals;
 
   Future<void> fetchUsers() async {
     final response = await http.get(Uri.parse('$baseUrl/get_users'));
@@ -27,7 +28,6 @@ class UserProvider with ChangeNotifier {
           'foods': [],
           'goals': null,
         };
-        // Add the ID to the user data
         return User.fromJson(userDataJson);
       }).toList();
 
@@ -134,10 +134,8 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  //TODO: Implement the fetchGoals method
   Future<void> fetchGoals() async {
-    final url = Uri.parse(
-        'https://your-api-endpoint.com/user/goals'); // Replace with your API endpoint
+    final url = Uri.parse('$baseUrl/get_goals/${_currentUser!.id}');
 
     try {
       final response = await http.get(url);

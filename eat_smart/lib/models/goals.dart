@@ -22,10 +22,10 @@ class Goals {
 
   factory Goals.fromJson(Map<String, dynamic> json) {
     return Goals(
-      calories: json['calories'],
-      proteins: json['proteins'],
-      carbs: json['carbs'],
-      fats: json['fats'],
+      calories: json['calories'].toDouble(),
+      proteins: json['proteins'].toDouble(),
+      carbs: json['carbs'].toDouble(),
+      fats: json['fats'].toDouble(),
     );
   }
 }

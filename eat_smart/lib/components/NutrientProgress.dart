@@ -4,14 +4,14 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class NutrientProgress extends StatelessWidget {
   final Nutrient nutrient;
-  final double leftAmount;
+  final double goal;
   final double progress, width;
   final Color progressColor;
 
   const NutrientProgress(
       {Key? key,
       required this.nutrient,
-      required this.leftAmount,
+      required this.goal,
       required this.progress,
       required this.progressColor,
       required this.width})
@@ -32,7 +32,7 @@ class NutrientProgress extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Text(
@@ -49,9 +49,9 @@ class NutrientProgress extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: LinearPercentIndicator(
-                  width: MediaQuery.of(context).size.width - 90,
+                  width: MediaQuery.of(context).size.width - 85,
                   animation: false,
                   lineHeight: 15.0,
                   percent: 0.8,
@@ -65,7 +65,7 @@ class NutrientProgress extends StatelessWidget {
                   ),
                   // linearStrokeCap: LinearStrokeCap.roundAll,
 
-                  progressColor: Colors.redAccent,
+                  progressColor: progressColor,
                 ),
               ),
             ],

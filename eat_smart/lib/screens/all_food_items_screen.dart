@@ -20,7 +20,9 @@ class _AllFoodItemsScreenState extends State<AllFoodItemsScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<UserProvider>(context, listen: false).fetchAllFoods();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.fetchAllFoods();
+    userProvider.fetchGoals();
   }
 
   @override

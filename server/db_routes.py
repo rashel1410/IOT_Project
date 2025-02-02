@@ -24,10 +24,12 @@ class User(BaseModel):
     id: str
     name: str
     food_items: list[FoodItem] = []
+    goals: dict = {}
 
 @router.post("/add_user")
 def add_user(user: User):
     user_ref = db.collection("users").document(user.id)
+    user.goals = {"calories": 2000.0, "protein": 200.0, "fats": 50.0, "carbs": 500.0}
     user_ref.set(user.dict(exclude={"food_items"}))
     print("User added successfully.")
     return {"status": "User added successfully"}
