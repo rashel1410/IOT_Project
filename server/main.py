@@ -122,8 +122,8 @@ def get_weight_from_file() -> float:
 
 
             
-@app.post("/upload_data/{username}")
-async def upload_data(weight: str = Form(...), image: UploadFile = File(...), username: str = None):
+@app.post("/upload_data/{user_id}")
+async def upload_data(weight: str = Form(...), image: UploadFile = File(...), user_id: str = None):
     #image_path = "Banana.jpg"
     # Save weight to JSON file
     weights_data = {"weight": weight}
@@ -176,15 +176,15 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...), us
 
     # default_user_id = "user2"
     
-    add_food(user_id=username, food=food_item)
+    add_food(user_id=user_id, food=food_item)
         
     return {"message": "Data uploaded successfully"}
 
 
-@app.post("/set_goals/{username}")
-async def set_goal(calories: float, protein: float, carbs: float, fats: float, username: str = None):
+@app.post("/set_goals/{user_id}")
+async def set_goal(calories: float, protein: float, carbs: float, fats: float, user_id: str = None):
     # Access the values from the new_goal dictionary
-    user_ref = db.collection("users").document(username)
+    user_ref = db.collection("users").document(user_id)
     goals_obj = user_ref.get().to_dict()["goals"]
     goals_obj["calories"] = calories
     goals_obj["fats"] = fats
@@ -194,9 +194,9 @@ async def set_goal(calories: float, protein: float, carbs: float, fats: float, u
     # return user_ref.get("goals")
     return {"message": "Goal updated successfully"}
    
-@app.get("/get_goals/{username}")
-async def get_goals(username: str):
-    user_ref = db.collection("users").document(username)
+@app.get("/get_goals/{user_id}")
+async def get_goals(user_id: str):
+    user_ref = db.collection("users").document(user_id)
     goals_obj = user_ref.get().to_dict()["goals"]
     return goals_obj   
 
