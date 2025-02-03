@@ -14,6 +14,10 @@
 * adafruit/Adafruit SSD1306 - version 2.5.13
 * bblanchon/ArduinoJson - version 7.3.0
 * bogde/HX711 - version 0.7.5
+* Adafruit GFX Library - version 1.11.11
+* Wire - version 2.0.0
+* HTTPClient - version 2.0.0
+* WiFi - version 2.0.0
 
 ## Project Poster:
  
