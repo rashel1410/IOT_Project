@@ -26,7 +26,7 @@
 // // Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 // Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-// void display_simple_setup()
+// void setup()
 // {
 //     Serial.begin(115200);
 //     delay(250); // Allow time for the OLED to power up
@@ -58,6 +58,6 @@
 //     display.display();
 // }
 
-// void display_simple_loop()
+// void loop()
 // {
 // }

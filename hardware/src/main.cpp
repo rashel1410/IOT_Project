@@ -4,20 +4,19 @@
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_SH110X.h>
 #include <HTTPClient.h>
+#include <tuple>
+
+using namespace std;
 
 // WiFi credentials
 const char *ssid = "Rahaf";
 const char *password = "122334455";
 
 /****************************************************************/
-/* Includes
+/* Includes from .h files
 /****************************************************************/
-#include "show_users_on_display/show_users_on_display.h"
-
-/****************************************************************/
-/* Helper Functions
-/****************************************************************/
-
+#include "displayUsers/displayUsers.h"
+#include "uploadData/uploadData.h"
 /****************************************************************/
 void setup()
 {
@@ -33,10 +32,18 @@ void setup()
   }
   Serial.println("\nConnected to Wi-Fi");
 
-  show_users_on_display();
+  initializeDisplay();
+  initCameraAndScale();
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
+  tuple<String, String> curr = handleNavigationButtonClick();
+  // String curr_user_name = get<0>(curr);
+  handleButtonClickAfterSelectingUser();
+  if (get<0>(curr) != "")
+  {
+    // String curr_user_id = get<1>(curr);
+    uploadData(get<1>(curr));
+  }
 }

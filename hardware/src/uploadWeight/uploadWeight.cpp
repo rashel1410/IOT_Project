@@ -6,8 +6,8 @@
 // #include "HX711.h"
 
 // // HX711 circuit wiring
-// const int LOADCELL_DOUT_PIN = 16;
-// const int LOADCELL_SCK_PIN = 4;
+// const int LOADCELL_DOUT_PIN = 47;
+// const int LOADCELL_SCK_PIN = 21;
 
 // #define BUTTON_PIN 14
 // bool buttonPressed = false;
@@ -21,7 +21,7 @@
 // // Server URL
 // const char *serverURL = "http://172.20.10.4:8045/save_weight";
 
-// void send_weight_setup()
+// void setup()
 // {
 //     Serial.begin(115200);
 //     // rtc_cpu_freq_config_t config;
@@ -87,7 +87,7 @@
 //     }
 // }
 
-// void send_weight_loop()
+// void loop()
 // {
 
 //     if (digitalRead(BUTTON_PIN) == LOW && !buttonPressed)
