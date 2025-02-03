@@ -21,7 +21,8 @@ def search_food_item_with_http_client(food_name):
     params = urllib.parse.urlencode({
         "query": food_name,
         "pageSize": 1,
-        "api_key": api_key
+        "api_key": api_key,
+        "dataType": "Foundation",
     })
 
     # Define the endpoint with encoded parameters
@@ -34,6 +35,18 @@ def search_food_item_with_http_client(food_name):
         
         # Read and decode the response
         data = response.read().decode("utf-8")
+        data_json = json.loads(data)
+        if(data_json["totalHits"] == 0):
+            params = urllib.parse.urlencode({
+                "query": food_name,
+                "pageSize": 1,
+                "api_key": api_key,
+            })
+            endpoint = f"/fdc/v1/foods/search?{params}"
+            conn.request("GET", endpoint)
+            response = conn.getresponse() 
+            data = response.read().decode("utf-8")  
+            data_json = json.loads(data)       
         
         # Close the connection
         conn.close()

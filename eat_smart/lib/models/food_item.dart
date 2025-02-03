@@ -18,17 +18,21 @@ class FoodItem {
   // List<FoodNutrients> get getNutrients => nutrients;
   // DateTime get getTimestamp => timestamp;
 
-  // set name(String name) {
-  //   this.name = name;
-  // }
+  final Map<String, String> mapToCalories = {
+    'Calories': 'Calories',
+    'Energy': 'Calories',
+  };
 
-  // set nutrients(List<FoodNutrients> nutrients) {
-  //   this.nutrients = nutrients;
-  // }
-
-  // set timestamp(DateTime timestamp) {
-  //   this.timestamp = timestamp;
-  // }
+  double getFoodCalories() {
+    double calories = 0;
+    for (var nutrient in nutrients) {
+      if (nutrient.nutrientNumber == '208') {
+        calories = nutrient.value;
+        return calories;
+      }
+    }
+    return calories;
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};

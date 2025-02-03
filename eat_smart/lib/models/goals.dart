@@ -1,12 +1,12 @@
 class Goals {
   final double calories;
-  final double proteins;
+  final double protein;
   final double carbs;
   final double fats;
 
   Goals({
     required this.calories,
-    required this.proteins,
+    required this.protein,
     required this.carbs,
     required this.fats,
   });
@@ -14,7 +14,7 @@ class Goals {
   Map<String, dynamic> toJson() {
     return {
       'calories': this.calories,
-      'proteins': this.proteins,
+      'protein': this.protein,
       'carbs': this.carbs,
       'fats': this.fats,
     };
@@ -23,7 +23,7 @@ class Goals {
   factory Goals.fromJson(Map<String, dynamic> json) {
     return Goals(
       calories: json['calories'].toDouble(),
-      proteins: json['proteins'].toDouble(),
+      protein: json['protein'].toDouble(),
       carbs: json['carbs'].toDouble(),
       fats: json['fats'].toDouble(),
     );

@@ -53,6 +53,13 @@ class _ProgressCardState extends State<ProgressCard> {
     'Fat': 'Fats',
   };
 
+  final Map<String, String> nutrientNumbersToMacros = {
+    "208": 'Calories',
+    "203": 'Protein',
+    "205": 'Carbs',
+    "204": 'Fats',
+  };
+
   Map<String, double> sumMacros(List<FoodItem> foods) {
     Map<String, double> nutrientTotals = {
       'Calories': 0.0,
@@ -62,9 +69,9 @@ class _ProgressCardState extends State<ProgressCard> {
     };
     for (var food in foods) {
       for (var nutrient in food.nutrients) {
-        if (nutrientToMacro.containsKey(nutrient.nutrientName)) {
+        if (nutrientNumbersToMacros.containsKey(nutrient.nutrientNumber)) {
           String mappedName =
-              nutrientToMacro[nutrient.nutrientName] ?? 'Unknown';
+              nutrientNumbersToMacros[nutrient.nutrientNumber] ?? 'Unknown';
 
           if (mappedName != 'Unknown') {
             nutrientTotals[mappedName] =
@@ -96,22 +103,22 @@ class _ProgressCardState extends State<ProgressCard> {
 
         final calories = Nutrient(
             nutrientName: 'Calories',
-            nutrientNumber: 'C',
+            nutrientNumber: '208',
             unitName: 'kcal',
             value: nutrientTotals['Calories'] ?? 0.0);
         final proteins = Nutrient(
             nutrientName: 'Protein',
-            nutrientNumber: 'P',
+            nutrientNumber: '203',
             unitName: 'g',
             value: nutrientTotals['Protein'] ?? 0.0);
         final carbs = Nutrient(
             nutrientName: 'Carbs',
-            nutrientNumber: 'C',
+            nutrientNumber: '205',
             unitName: 'g',
             value: nutrientTotals['Carbs'] ?? 0.0);
         final fats = Nutrient(
             nutrientName: 'Fats',
-            nutrientNumber: 'F',
+            nutrientNumber: '204',
             unitName: 'g',
             value: nutrientTotals['Fats'] ?? 0.0);
 
@@ -130,7 +137,7 @@ class _ProgressCardState extends State<ProgressCard> {
             );
           }
           final caloriesGoal = currentUser.goals?.calories ?? 2000;
-          final proteinsGoal = currentUser.goals?.proteins ?? 50;
+          final proteinsGoal = currentUser.goals?.protein ?? 50;
           final carbsGoal = currentUser.goals?.carbs ?? 500;
           final fatsGoal = currentUser.goals?.fats ?? 50;
 

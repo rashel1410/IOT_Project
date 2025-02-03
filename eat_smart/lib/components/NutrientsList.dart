@@ -28,7 +28,7 @@ class NutrientsList extends StatelessWidget {
                         style: const TextStyle(fontSize: 14),
                       ),
                       Text(
-                        '${nutrient.value} ${nutrient.unitName.toLowerCase()}',
+                        '${nutrient.value.toStringAsFixed(2)} ${nutrient.unitName.toLowerCase()}',
                         style: const TextStyle(fontSize: 14),
                       ),
                     ],

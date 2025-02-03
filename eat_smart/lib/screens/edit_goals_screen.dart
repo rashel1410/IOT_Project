@@ -75,7 +75,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
     final userGoals = userProvider.currentUser?.goals;
 
     _caloriesController.text = userGoals?.calories.toString() ?? '';
-    _proteinsController.text = userGoals?.proteins.toString() ?? '';
+    _proteinsController.text = userGoals?.protein.toString() ?? '';
     _carbsController.text = userGoals?.carbs.toString() ?? '';
     _fatsController.text = userGoals?.fats.toString() ?? '';
 
@@ -108,7 +108,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return '${userGoals?.proteins.toString()}';
+                        return '${userGoals?.protein.toString()}';
                       }
                       return null;
                     },

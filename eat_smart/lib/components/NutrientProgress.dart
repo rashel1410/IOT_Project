@@ -38,9 +38,7 @@ class NutrientProgress extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                nutrient.value.toStringAsFixed(1).toString() +
-                    " " +
-                    nutrient.unitName,
+                "${nutrient.value.toStringAsFixed(1)} ${nutrient.unitName}",
                 style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,

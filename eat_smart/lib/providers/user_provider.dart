@@ -126,7 +126,7 @@ class UserProvider with ChangeNotifier {
     if (_currentUser != null) {
       _currentUser!.goals = Goals(
         calories: calories,
-        proteins: proteins,
+        protein: proteins,
         carbs: carbs,
         fats: fats,
       );
@@ -142,7 +142,12 @@ class UserProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final goalsData = json.decode(response.body);
-        _currentUser!.goals = Goals.fromJson(goalsData);
+        _currentUser!.goals = Goals(
+          calories: goalsData['calories'].toDouble(),
+          protein: goalsData['protein'].toDouble(),
+          carbs: goalsData['carbs'].toDouble(),
+          fats: goalsData['fats'].toDouble(),
+        );
         notifyListeners();
       } else {
         throw Exception('Failed to fetch goals: ${response.body}');
