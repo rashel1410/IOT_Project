@@ -21,7 +21,9 @@ import json
 from usda_api import search_food_item_with_http_client
 from datetime import datetime
 from firebase_config import db
-
+from server_constants import baseUrl
+from server_constants import weights_file
+from server_constants import image_path
 
 
 
@@ -31,12 +33,7 @@ app.include_router(db_router)
 
 # Configure CORS
 origins = [
-    "http://localhost",
-    "http://localhost:5000",
-    "http://132.68.34.28:8045",
-    #"http://10.100.102.7:8045",  # Add your local IP address here
-    #"http://172.20.10.2:8045",  # Add your local IP address here
-    # Add other origins as needed
+    baseUrl,
 ]
 
 app.add_middleware(
@@ -100,7 +97,7 @@ async def upload_image(request: Request):
         image_data = await request.body()
         
         # image_path = os.path.join(UPLOAD_DIR, "uploaded_image.jpg")
-        image_path = "uploaded/captured_image.jpg"
+
         with open(image_path, "wb") as file:
             file.write(image_data)
         
@@ -113,7 +110,7 @@ async def upload_image(request: Request):
 
 def get_weight_from_file() -> float:
     try:
-        with open("/Users/rashelstrigevsky/development/IOT/IOT_Project/server/uploaded/weights.json", "r") as file:
+        with open(weights_file, "r") as file:
             data = json.load(file)
             weight = float(data["weight"])
             return weight
