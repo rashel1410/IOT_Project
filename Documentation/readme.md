@@ -1,4 +1,6 @@
-# Server and Application Instructions
+# Firmware, Server & Application Instructions
+## Firmware Connection Diagram
+![Connection Diagram](Connections Diagram.jpeg)
 
 ## Server Instructions
 
