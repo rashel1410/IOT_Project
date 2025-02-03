@@ -11,7 +11,11 @@ class User {
   final String id;
   Goals? goals;
 
-  User({this.id = '', this.name = '', this.foodsList = const [], this.goals});
+  User(
+      {this.id = '',
+      this.name = '',
+      this.foodsList = const [],
+      this.goals = null});
 
   String getUserName() {
     return this.name; //name;
@@ -22,7 +26,7 @@ class User {
       'id': this.id,
       'name': this.name,
       'foods': this.foodsList,
-      'goals': this.goals?.toJson(),
+      'goals': this.goals != null ? this.goals!.toJson() : {},
     };
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ml/screens/edit_goals_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart'; // Import your user provider
 import '../models/user.dart';
@@ -119,6 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: const Text('Add User'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditGoalsScreen()),
+                        );
+                      },
+                      child: const Text('Set goals'),
                     ),
                   ],
                 ),

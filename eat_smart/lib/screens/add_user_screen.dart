@@ -21,6 +21,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: _nameController.text,
         foodsList: [],
+        goals: null,
       );
 
       const url = '$baseUrl/add_user';

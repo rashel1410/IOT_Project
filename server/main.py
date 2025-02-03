@@ -142,6 +142,7 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...), us
     # Search for the food item in the USDA FoodData Central API
     food_info = search_food_item_with_http_client(food_item_name)
     food_item_json = food_info["foods"][0]
+    # return food_item_json
     food_nutrients_json = food_item_json["foodNutrients"]
 
     nutrients_list = [

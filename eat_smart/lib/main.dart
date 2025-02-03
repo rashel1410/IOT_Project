@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         FoodItemScreen.routeName: (context) => FoodItemScreen(),
         AllFoodItemsScreen.routeName: (context) => AllFoodItemsScreen(),
         EditGoalsScreen.routeName: (context) => EditGoalsScreen(),
+        EditGoalsScreen.routeName: (context) => EditGoalsScreen(),
       },
     );
   }

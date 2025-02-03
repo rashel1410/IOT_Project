@@ -24,12 +24,18 @@ class User(BaseModel):
     id: str
     name: str
     food_items: list[FoodItem] = []
-    goals: dict = {}
+    goals: dict = None
+
+class Goals(BaseModel):
+    calories: float
+    protein: float
+    fats: float
+    carbs: float
 
 @router.post("/add_user")
 def add_user(user: User):
     user_ref = db.collection("users").document(user.id)
-    user.goals = {"calories": 2000.0, "protein": 200.0, "fats": 50.0, "carbs": 500.0}
+    user.goals = Goals(calories=2000.0, protein=200.0, fats=50.0, carbs=500.0)
     user_ref.set(user.dict(exclude={"food_items"}))
     print("User added successfully.")
     return {"status": "User added successfully"}
@@ -138,7 +144,7 @@ def add_food_mock_data(user_id: str):
 
     print("Mock food items added to Firestore successfully.")
 
-@app.post("/set_goals/{user_id}")
+@router.post("/set_goals/{user_id}")
 async def set_goal(calories: float, protein: float, carbs: float, fats: float, user_id: str = None):
     # Access the values from the new_goal dictionary
     user_ref = db.collection("users").document(user_id)
@@ -151,7 +157,7 @@ async def set_goal(calories: float, protein: float, carbs: float, fats: float, u
     # return user_ref.get("goals")
     return {"message": "Goal updated successfully"}
    
-@app.get("/get_goals/{user_id}")
+@router.get("/get_goals/{user_id}")
 async def get_goals(user_id: str):
     user_ref = db.collection("users").document(user_id)
     goals_obj = user_ref.get().to_dict()["goals"]
