@@ -23,7 +23,6 @@ class FoodItemsListWidget extends StatelessWidget {
             const SliverToBoxAdapter(
               child: Column(
                 children: [
-                  SizedBox(height: 100),
                   ProgressCard(),
                   // Add any other widgets you want to display at the top
                   Padding(

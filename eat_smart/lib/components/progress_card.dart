@@ -20,26 +20,6 @@ class _ProgressCardState extends State<ProgressCard> {
     Provider.of<UserProvider>(context, listen: false).fetchAllFoods();
   }
 
-  // List<double> sumNutrients(List<FoodItem> foods) {
-  //   Map<String, double> nutrientValuesSums = {};
-  //   for (var food in foods) {
-  //     for (var nutrient in food.nutrients) {
-  //       if (nutrientValuesSums.containsKey(nutrient.nutrientName)) {
-  //         if (nutrientValuesSums.containsKey(nutrient.nutrientName)) {
-  //           nutrientValuesSums[nutrient.nutrientName] =
-  //               (nutrientValuesSums[nutrient.nutrientName] ?? 0.0) +
-  //                   nutrient.value;
-  //         } else {
-  //           nutrientValuesSums[nutrient.nutrientName] = nutrient.value;
-  //         }
-  //       } else {
-  //         nutrientValuesSums[nutrient.nutrientName] = nutrient.value;
-  //       }
-  //     }
-  //   }
-  //   return nutrientValuesSums.values.toList();
-  // }
-
   final Map<String, String> nutrientToMacro = {
     'Calories': 'Calories',
     'Energy': 'Calories',
@@ -176,28 +156,28 @@ class _ProgressCardState extends State<ProgressCard> {
                       nutrient: calories,
                       goal: caloriesGoal,
                       progress: (calories.value / caloriesGoal) * 100,
-                      progressColor: Colors.red,
+                      progressColor: const Color(0xFFE85D75),
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: proteins,
                       goal: proteinsGoal,
                       progress: (proteins.value / caloriesGoal) * 100,
-                      progressColor: Colors.green,
+                      progressColor: const Color(0xFF1C7ED6),
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: carbs,
                       goal: carbsGoal,
                       progress: (carbs.value / caloriesGoal) * 100,
-                      progressColor: Colors.blue,
+                      progressColor: const Color(0xFF2BA45C),
                       width: progressorWidth,
                     ),
                     NutrientProgress(
                       nutrient: fats,
                       goal: fatsGoal,
                       progress: (fats.value / caloriesGoal) * 100,
-                      progressColor: Colors.purple,
+                      progressColor: const Color(0xFFFFA94D),
                       width: progressorWidth,
                     ),
                   ],

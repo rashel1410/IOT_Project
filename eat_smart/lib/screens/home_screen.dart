@@ -5,6 +5,7 @@ import '../providers/user_provider.dart'; // Import your user provider
 import '../models/user.dart';
 import 'add_user_screen.dart';
 import 'last_food_item_screen.dart'; // Import your user model
+import '../components/custom_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -136,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }),
-        ));
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar());
   }
 }

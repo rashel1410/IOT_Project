@@ -148,7 +148,7 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
                                     'Weight: ${userProvider.lastFoodItem!.weight}g'),
                                 const SizedBox(height: 8),
                                 Text(
-                                    'Calories: ${userProvider.lastFoodItem!.getFoodCalories()} kcal'),
+                                    'Calories: ${userProvider.lastFoodItem!.getFoodCalories().toStringAsFixed(2)} kcal'),
                               ],
                             ),
                           ),
