@@ -21,7 +21,7 @@ This project is part of ICST - The Interdisciplinary Center for Smart Technologi
 https://icst.cs.technion.ac.il/
 
 
-# In order to run the server:
+## In order to run the server:
 ```bash
 # Pull git repo
 git pull
