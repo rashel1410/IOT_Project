@@ -33,9 +33,9 @@ app.include_router(db_router)
 origins = [
     "http://localhost",
     "http://localhost:5000",
-    "http://172.20.10.2:8045",
+    "http://132.68.34.28:8045",
     #"http://10.100.102.7:8045",  # Add your local IP address here
-    #"http://132.69.234.13:8045",  # Add your local IP address here
+    #"http://172.20.10.2:8045",  # Add your local IP address here
     # Add other origins as needed
 ]
 
@@ -139,23 +139,29 @@ async def upload_data(weight: str = Form(...), image: UploadFile = File(...), us
 
     food_item_name = analyze_food_with_gemini(image_path)
 
+    food_item_weight = get_weight_from_file()
+
     # Search for the food item in the USDA FoodData Central API
     food_info = search_food_item_with_http_client(food_item_name)
     food_item_json = food_info["foods"][0]
-    # return food_item_json
+    serving_size = food_item_json["servingSize"]
+    serving_size_unit = food_item_json["servingSizeUnit"]
+    serving_portions = food_item_weight/serving_size
+
+
     food_nutrients_json = food_item_json["foodNutrients"]
+    print(food_item_json)
 
     nutrients_list = [
     FoodNutrients(
         nutrientName=nutrient["nutrientName"],
         nutrientNumber=str(nutrient["nutrientNumber"]),
         unitName=nutrient["unitName"],
-        value=float(nutrient["value"])
+        value=float(nutrient["value"] * serving_portions)
     )
     for nutrient in food_nutrients_json
     ]
 
-    food_item_weight = get_weight_from_file()
 
     # Create the FoodItem object
 

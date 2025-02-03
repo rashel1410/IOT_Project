@@ -20,6 +20,22 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
     super.initState();
   }
 
+  final Map<String, String> mapToCalories = {
+    'Calories': 'Calories',
+    'Energy': 'Calories',
+  };
+
+  double getUserCalories(FoodItem foodItem) {
+    double calories = 0;
+    for (var nutrient in foodItem.nutrients) {
+      if (mapToCalories.containsKey(nutrient.nutrientName)) {
+        calories = nutrient.value;
+        return calories;
+      }
+    }
+    return calories;
+  }
+
   @override
   Widget build(BuildContext context) {
     final FoodItem selectedFoodItem =
@@ -76,7 +92,7 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '${selectedFoodItem.nutrients[0].value} calories',
+                              '${getUserCalories(selectedFoodItem)} calories',
                               style: const TextStyle(fontSize: 16),
                             ),
                           ],
