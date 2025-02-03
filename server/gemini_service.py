@@ -70,7 +70,6 @@ def analyze_food_with_gemini(image_path):
         except json.JSONDecodeError:
             print("printing from except")
             print("Response is not valid JSON. Raw response: ", response)
-        return food_details
     except Exception as e:
         return {"error"}
 

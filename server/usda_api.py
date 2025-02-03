@@ -1,5 +1,6 @@
 import http.client
 import json
+import os
 import urllib.parse
 import ssl
 
@@ -14,7 +15,7 @@ def search_food_item_with_http_client(food_name):
     Returns:
         dict: The search results from the API.
     """
-    api_key = "jKaj2JaaLo0FJuIqO1D150ppUCv2HbIcXUdYWCtL"
+    api_key=os.getenv("USDA_API_KEY")
     # conn = http.client.HTTPSConnection("api.nal.usda.gov")
     conn = http.client.HTTPSConnection("api.nal.usda.gov", context=ssl._create_unverified_context())
     # URL encode the query parameters
