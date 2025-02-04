@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import json
 
 SERVICE_ACCOUNT_KEY = "accountKey.json"
 

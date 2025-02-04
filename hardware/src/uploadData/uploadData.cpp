@@ -1,12 +1,16 @@
+// cSpell: disable
 #include <Arduino.h>
 #include <esp_camera.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "HX711.h"
-
-// Define button pin and other constants as before...
-
-#define BUTTON_PIN 14 // Adjust to your button's GPIO pin
+/****************************************************************/
+/* Includes from .h files
+/****************************************************************/
+#include "uploadData.h"
+#include "displayUsers/displayUsers.h"
+/**************************** Globals ***************************/
+#define BUTTON_PIN 3
 
 #define PWDN_GPIO_NUM -1
 #define RESET_GPIO_NUM -1
@@ -31,16 +35,10 @@
 const int LOADCELL_DOUT_PIN = 47;
 const int LOADCELL_SCK_PIN = 21;
 
-bool buttonPressed = false;
+bool isButtonPressed = false;
 HX711 scale;
 
-// WiFi credentials
-const char *ssid = "Rahaf";
-const char *password = "122334455";
-
-// Server URL
-const char *serverURL = "http://172.20.10.4:8045/upload_data"; // Single endpoint
-
+/****************************************************************/
 void setupCameraConfig()
 {
     // Initialize camera
@@ -64,7 +62,6 @@ void setupCameraConfig()
     camera_config.pin_pwdn = PWDN_GPIO_NUM;
     camera_config.pin_reset = RESET_GPIO_NUM;
     camera_config.xclk_freq_hz = 20000000;
-    // camera_config.frame_size = FRAMESIZE_UXGA;
     camera_config.frame_size = FRAMESIZE_VGA;
     camera_config.pixel_format = PIXFORMAT_JPEG; // for streaming
     camera_config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
@@ -93,21 +90,55 @@ void setupCameraConfig()
         return;
     }
 }
+/****************************************************************/
+void initCameraAndScale()
+{
+    Serial.begin(115200);
 
-void captureAndSendData()
+    // Initialize camera
+    setupCameraConfig();
+
+    // Initialize scale
+    scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+
+    // Initialize buttons pins as in your original code
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
+}
+/****************************************************************/
+void uploadData(String user_id)
+{
+    if (digitalRead(BUTTON_PIN) == LOW && !isButtonPressed)
+    {
+        isButtonPressed = true;
+        captureAndSendData(user_id);
+    }
+
+    if (digitalRead(BUTTON_PIN) == HIGH)
+    {
+        isButtonPressed = false;
+    }
+}
+/****************************************************************/
+void captureAndSendData(String user_id)
 {
     // Read weight
-    scale.set_scale(459.691667);
-    Serial.println("Tare... remove any items from the scale");
+    scale.set_scale(467.775);
+    displayText("Remove items");
+    Serial.println("Remove items from the scale");
     delay(1000);
     scale.tare();
-    Serial.println("Tare done...");
+    Serial.println("Tare done");
+    // displayText("Tare done");
     delay(1000);
-    Serial.print("Place an item on the scale...");
+    Serial.print("Place your item ");
+    displayText("Place your item");
     delay(3000);
     long weightReading = scale.get_units(10);
     delay(1000);
     Serial.printf("Weight reading: %ld\n", weightReading);
+    displayText("Done!");
+    delay(1000);
+    handleButtonClick(1); // Display user selection screen
 
     // Release previous frame, if any
     camera_fb_t *previousPhoto = esp_camera_fb_get();
@@ -129,12 +160,13 @@ void captureAndSendData()
     // Prepare HTTP multipart body
     HTTPClient http;
     String boundary = "----ESP32Boundary";
-    String startBoundary = "--" + boundary + "\r\n"
-                                             "Content-Disposition: form-data; name=\"weight\"\r\n\r\n" +
-                           String(weightReading) + "\r\n" + // Add weight field
-                           "--" + boundary + "\r\n"
-                                             "Content-Disposition: form-data; name=\"image\"; filename=\"photo.jpg\"\r\n" // Changed to "image"
-                                             "Content-Type: image/jpeg\r\n\r\n";
+    String startBoundary =
+        "--" + boundary + "\r\n"
+                          "Content-Disposition: form-data; name=\"weight\"\r\n\r\n" +
+        String(weightReading) + "\r\n" +
+        "--" + boundary + "\r\n"
+                          "Content-Disposition: form-data; name=\"image\"; filename=\"photo.jpg\"\r\n"
+                          "Content-Type: image/jpeg\r\n\r\n";
     String endBoundary = "\r\n--" + boundary + "--\r\n";
 
     // Calculate content length
@@ -155,7 +187,8 @@ void captureAndSendData()
     memcpy(body + startBoundary.length() + capturedPhoto->len, endBoundary.c_str(), endBoundary.length());
 
     // Send HTTP POST request
-    http.begin(serverURL);
+    const String upload_data_url = "http://172.20.10.4:8045/upload_data/" + user_id;
+    http.begin(upload_data_url);
     http.setTimeout(20000);
     http.addHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
     int httpResponseCode = http.POST(body, contentLength);
@@ -163,7 +196,7 @@ void captureAndSendData()
     if (httpResponseCode > 0)
     {
         String response = http.getString();
-        Serial.printf("Photo and weight sent successfully. Server response: %d\n", httpResponseCode);
+        Serial.printf("Data sent successfully. Server response: %d\n", httpResponseCode);
         Serial.println("Response: " + response);
     }
     else
@@ -175,38 +208,4 @@ void captureAndSendData()
     free(body);
     http.end();
     esp_camera_fb_return(capturedPhoto); // Free the frame buffer
-}
-
-void setup()
-{
-    Serial.begin(115200);
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(500);
-    }
-    Serial.println("WiFi connected");
-
-    // Initialize camera
-    setupCameraConfig();
-
-    // Initialize scale
-    scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-
-    // Initialize button pin as in your original code
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
-}
-
-void loop()
-{
-    if (digitalRead(BUTTON_PIN) == LOW && !buttonPressed)
-    {
-        buttonPressed = true;
-        captureAndSendData();
-    }
-
-    if (digitalRead(BUTTON_PIN) == HIGH)
-    {
-        buttonPressed = false;
-    }
 }

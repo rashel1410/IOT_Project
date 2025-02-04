@@ -16,7 +16,7 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
   @override
   void initState() {
     super.initState();
-    user = User(name: 'Dani', foods: []);
+    user = User(name: 'Dani', foodsList: []);
     items = user.getUserFoods();
   }
 
@@ -26,7 +26,8 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
       appBar: AppBar(
         toolbarHeight: 100.0,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 20.0), // Add padding to the top
+          padding: const EdgeInsets.only(
+              top: 30.0, bottom: 20.0), // Add padding to the top
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,7 +38,6 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
           ),
         ),
       ),
-
       body: FutureBuilder<List<FoodItem>>(
         future: items,
         builder: (context, snapshot) {
@@ -54,10 +54,10 @@ class _UserFoodScreenState extends State<UserFoodScreen> {
                 final foodItem = snapshot.data![index];
                 return ListTile(
                   title: Text(foodItem.name),
-                  subtitle: Text(
-                      foodItem.nutrients.map(
-                              (nutrient) => '${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}').join(', ')
-                  ),
+                  subtitle: Text(foodItem.nutrients
+                      .map((nutrient) =>
+                          '${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}')
+                      .join(', ')),
                 );
               },
             );

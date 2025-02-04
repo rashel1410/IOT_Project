@@ -224,6 +224,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/rashelstrigevsky/.pub-cache/hosted/pub.dev/intl-0.20.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "json_annotation",
       "rootUri": "file:///Users/rashelstrigevsky/.pub-cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
@@ -434,6 +440,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "timezone",
+      "rootUri": "file:///Users/rashelstrigevsky/.pub-cache/hosted/pub.dev/timezone-0.9.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "typed_data",
       "rootUri": "file:///Users/rashelstrigevsky/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
@@ -482,7 +494,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2025-02-04T01:02:00.020125Z",
+  "generated": "2025-02-04T00:57:08.395864Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/rashelstrigevsky/development/flutter",

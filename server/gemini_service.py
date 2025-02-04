@@ -40,32 +40,36 @@ def analyze_food_with_gemini(image_path):
 
         model = genai.GenerativeModel(model_name="gemini-1.5-pro")
         prompt = """
-            Provide the name of this food item and its nutrition values for a weight of 100 grams
-            (Ensure the response is a valid JSON object string without extra characters, headers, or wrapping, so it can be directly passed to `json.loads` in Python.):
-            The JSON should be in the following JSON format:
-            {
-                "name": "<food item name>",
-                "nutrients": [
-                    {
-                        "nutrientName": "<name of the nutrient>",
-                        "nutrientNumber": "<nutrient number>",
-                        "unitName": "<unit>",
-                        "value": <value in float>
-                    }
-                ],
-                "timestamp": "<ISO 8601 timestamp>"
-            }
-            """
+                Given the image of a food item, provide the name of the food item usind the shortest description possible.
+                """
+        # """
+        #     Provide the name of this food item and its nutrition values for a weight of 100 grams
+        #     (Ensure the response is a valid JSON object string without extra characters, headers, or wrapping, so it can be directly passed to `json.loads` in Python.):
+        #     The JSON should be in the following JSON format:
+        #     {
+        #         "name": "<food item name>",
+        #         "nutrients": [
+        #             {
+        #                 "nutrientName": "<name of the nutrient>",
+        #                 "nutrientNumber": "<nutrient number>",
+        #                 "unitName": "<unit>",
+        #                 "value": <value in float>
+        #             }
+        #         ],
+        #         "timestamp": "<ISO 8601 timestamp>"
+        #     }
+        #     """
         
         raw_response = model.generate_content([prompt, sample_file_1])
         response = raw_response.text.replace("```json", "").replace("```", "").strip()
         print(response)
         try:
-            food_details = json.loads(response)  # This will convert the string into a dictionary
-            print("Parsed JSON Response: ", food_details)
+            return response
+            #food_details = json.loads(response)  # This will convert the string into a dictionary
+            #print("Parsed JSON Response: ", food_details)
         except json.JSONDecodeError:
+            print("printing from except")
             print("Response is not valid JSON. Raw response: ", response)
-        return food_details
     except Exception as e:
         return {"error"}
 
