@@ -4,7 +4,6 @@ import 'package:flutter_ml/models/food_nutrients.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import 'NutrientProgress.dart';
-import 'CircleNutrientProgress.dart';
 
 class ProgressCard extends StatefulWidget {
   const ProgressCard({Key? key}) : super(key: key);

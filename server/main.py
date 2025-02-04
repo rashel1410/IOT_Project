@@ -23,7 +23,7 @@ from datetime import datetime
 from firebase_config import db
 from server_constants import baseUrl
 from server_constants import weights_file
-from server_constants import image_path
+from server_constants import image_file
 
 
 
