@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import json
 
-SERVICE_ACCOUNT_KEY = "accountKey.json"
+SERVICE_ACCOUNT_KEY = "/Users/rashelstrigevsky/development/IOT/IOT_Project/server/accountKey.json"
 
 # Initialize Firebase
 cred = credentials.Certificate(SERVICE_ACCOUNT_KEY)
