@@ -7,6 +7,7 @@ import 'food_item_screen.dart';
 import 'user_nutri_info_screen.dart';
 
 class LastFoodItemScreen extends StatefulWidget {
+  static String routeName = '/last_food_item_screen';
   @override
   _LastFoodItemScreenState createState() => _LastFoodItemScreenState();
 }
@@ -59,13 +60,26 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
           elevation: 0.0,
           centerTitle: true,
         ),
-        body: const Center(
-          child: Text(
-            'No food items found',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'No food items found',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 100),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, LastFoodItemScreen.routeName);
+                },
+                icon: const Icon(Icons.refresh),
+              ),
+            ],
           ),
         ),
       );

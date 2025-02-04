@@ -46,23 +46,21 @@ class _AllFoodItemsScreenState extends State<AllFoodItemsScreen> {
           final currentUser = userProvider.currentUser;
 
           if (currentUser != null && currentUser.foodsList.isNotEmpty) {
-            return const Center(
-                child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: FoodItemsListWidget()));
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                  width: double.infinity,
+                  child: FoodItemsListWidget(),
+                ),
+              ),
+            );
           } else {
-            return const Text(
-              'No food items found',
-              style: TextStyle(fontSize: 20),
-
-              // const Expanded(
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.only(
-              //       topLeft: Radius.circular(50),
-              //       topRight: Radius.circular(50),
-              //     ),
-              //   ),
-              // )
+            return Center(
+              child: Text(
+                'No food items found',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             );
           }
         },

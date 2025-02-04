@@ -22,57 +22,69 @@ class NutrientProgress extends StatelessWidget {
     double percent = progress / 100;
     percent = percent > 1.0 ? 1.0 : percent;
     return LayoutBuilder(builder: (context, constraints) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: [
-              Text(
-                nutrient.nutrientName,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                "${nutrient.value.toStringAsFixed(1)} ${nutrient.unitName}",
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            //mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return Padding(
+        padding: const EdgeInsets.all(8.0), // Add padding to the card
+        child: Container(
+          width: constraints.maxWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: LinearPercentIndicator(
-                  width: MediaQuery.of(context).size.width - 85,
-                  animation: false,
-                  lineHeight: 15.0,
-                  percent: percent,
-                  center: Text(
-                    "${progress.toStringAsFixed(1)}%",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    nutrient.nutrientName,
                     style: const TextStyle(
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  // linearStrokeCap: LinearStrokeCap.roundAll,
+                  // const SizedBox(
+                  //   width: 100,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "${nutrient.value.toStringAsFixed(1)} ${nutrient.unitName}",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        " / ${goal.toStringAsFixed(1)} ${nutrient.unitName}",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                  height: 8), // Add spacing between the rows and progress bar
 
-                  progressColor: progressColor,
+              LinearPercentIndicator(
+                width: constraints.maxWidth *
+                    0.9, // Set the width to match the parent constraints
+                animation: false,
+                lineHeight: 15.0,
+                percent: percent,
+                center: Text(
+                  "${progress.toStringAsFixed(1)}%",
+                  style: const TextStyle(
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
                 ),
+                progressColor: progressColor,
               ),
             ],
           ),
-        ],
+        ),
       );
     });
   }

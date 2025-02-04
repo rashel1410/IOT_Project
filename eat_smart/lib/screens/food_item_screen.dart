@@ -92,7 +92,7 @@ class _FoodItemScreenState extends State<FoodItemScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '${selectedFoodItem.getFoodCalories()} calories',
+                              '${selectedFoodItem.getFoodCalories().toStringAsFixed(2)} calories',
                               style: const TextStyle(fontSize: 16),
                             ),
                           ],

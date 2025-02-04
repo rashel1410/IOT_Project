@@ -80,6 +80,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen> {
     _fatsController.text = userGoals?.fats.toString() ?? '';
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Edit Goals'),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ml/screens/all_food_items_screen.dart';
 import 'package:flutter_ml/screens/edit_goals_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart'; // Import your user provider
@@ -15,10 +16,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     _fetchUsers();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LastFoodItemScreen()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AllFoodItemsScreen()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EditGoalsScreen()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+        break;
+    }
   }
 
   Future<void> _fetchUsers() async {
@@ -72,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
@@ -122,22 +158,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: const Text('Add User'),
                     ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditGoalsScreen()),
-                        );
-                      },
-                      child: const Text('Set goals'),
-                    ),
                   ],
                 ),
               ),
             );
           }),
         ),
-        bottomNavigationBar: CustomBottomNavigationBar());
+        //bottomNavigationBar: CustomBottomNavigationBar()
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          iconSize: 22,
+          backgroundColor: Colors.white,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
+          fixedColor: Colors.black,
+          showSelectedLabels: true,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.scale),
+              label: 'Last Scale',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.food_bank_rounded),
+              label: 'View Foods',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Set Goals',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          //selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ));
   }
 }

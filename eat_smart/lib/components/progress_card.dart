@@ -4,6 +4,7 @@ import 'package:flutter_ml/models/food_nutrients.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import 'NutrientProgress.dart';
+import 'CircleNutrientProgress.dart';
 
 class ProgressCard extends StatefulWidget {
   const ProgressCard({Key? key}) : super(key: key);
@@ -131,56 +132,59 @@ class _ProgressCardState extends State<ProgressCard> {
           }
 
           return Container(
-            constraints: const BoxConstraints(
-              minHeight: 200.0,
-              minWidth: 200.0,
-            ),
+            // constraints: const BoxConstraints(
+            //   minHeight: 200.0,
+            //   minWidth: 200.0,
+            //   maxWidth: constr,
+            // ),
             child: Card(
               elevation: 5,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ListTile(
-                      title: Text(
-                        '${userProvider.currentUser?.name ?? 'User'}\'s Progress',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ListTile(
+                        title: Text(
+                          '${userProvider.currentUser?.name ?? 'User'}\'s Progress',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    NutrientProgress(
-                      nutrient: calories,
-                      goal: caloriesGoal,
-                      progress: (calories.value / caloriesGoal) * 100,
-                      progressColor: const Color(0xFFE85D75),
-                      width: progressorWidth,
-                    ),
-                    NutrientProgress(
-                      nutrient: proteins,
-                      goal: proteinsGoal,
-                      progress: (proteins.value / caloriesGoal) * 100,
-                      progressColor: const Color(0xFF1C7ED6),
-                      width: progressorWidth,
-                    ),
-                    NutrientProgress(
-                      nutrient: carbs,
-                      goal: carbsGoal,
-                      progress: (carbs.value / caloriesGoal) * 100,
-                      progressColor: const Color(0xFF2BA45C),
-                      width: progressorWidth,
-                    ),
-                    NutrientProgress(
-                      nutrient: fats,
-                      goal: fatsGoal,
-                      progress: (fats.value / caloriesGoal) * 100,
-                      progressColor: const Color(0xFFFFA94D),
-                      width: progressorWidth,
-                    ),
-                  ],
+                      NutrientProgress(
+                        nutrient: calories,
+                        goal: caloriesGoal,
+                        progress: (calories.value / caloriesGoal) * 100,
+                        progressColor: const Color(0xFFE85D75),
+                        width: progressorWidth,
+                      ),
+                      NutrientProgress(
+                        nutrient: proteins,
+                        goal: proteinsGoal,
+                        progress: (proteins.value / caloriesGoal) * 100,
+                        progressColor: const Color(0xFF1C7ED6),
+                        width: progressorWidth,
+                      ),
+                      NutrientProgress(
+                        nutrient: carbs,
+                        goal: carbsGoal,
+                        progress: (carbs.value / caloriesGoal) * 100,
+                        progressColor: const Color(0xFF2BA45C),
+                        width: progressorWidth,
+                      ),
+                      NutrientProgress(
+                        nutrient: fats,
+                        goal: fatsGoal,
+                        progress: (fats.value / caloriesGoal) * 100,
+                        progressColor: const Color(0xFFFFA94D),
+                        width: progressorWidth,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
