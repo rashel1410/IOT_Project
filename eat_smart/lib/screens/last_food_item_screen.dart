@@ -75,7 +75,9 @@ class _LastFoodItemScreenState extends State<LastFoodItemScreen> {
               const SizedBox(height: 100),
               IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, LastFoodItemScreen.routeName);
+                  setState(() {
+                    userProvider.fetchAllFoods();
+                  });
                 },
                 icon: const Icon(Icons.refresh),
               ),
