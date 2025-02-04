@@ -1,2 +1,12 @@
 Inside the server directory, there's a file named server_constants.py
-And inside eat_smart/lib, there's a file named constants.dart
+Inside eat_smart/lib, there's a file named constants.dart
+Inside hardware directory in the main.cpp file, there are the following constants that need to be adjusted:
+
+const char *ssid = <your Wifi network>;
+const char *password = <password for that network>;
+
+And, inside hardware directory in the hardware/displayUsers/displayUsers.cpp change the base url in the following constants that the http requests use:
+const char *get_users_url = "http://<your ip>/get_users";
+
+The same is needed in the hardware/uploadData/uploadData.cpp
+const String upload_data_url = "http://<your ip>/upload_data/";
